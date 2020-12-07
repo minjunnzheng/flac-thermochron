@@ -1,0 +1,22 @@
+Flags used to compile the code:
+   CXX=g++ debug=0 openmp=1
+   PATH=/home/summer-tan2/mingjun/flac-thermochron/src
+   LD_LIBRARY_PATH=/home/summer-tan2/mingjun/flac-thermochron/src
+==== Summary of the code ====
+commit fe813a67f60e57e629c6b975c28eb2b0e340bd43
+Author: mingjun <minjunnzheng@gmail.com>
+Date:   Tue Dec 8 00:48:58 2020 +0800
+
+    t3
+
+commit d948125c1bb093594228335fe688c894cca952c9
+Author: mingjun <minjunnzheng@gmail.com>
+Date:   Tue Dec 8 00:32:24 2020 +0800
+
+    t2
+
+commit ed36c0d843e07cc1fc6c3dfccbad9004e9eb8458
+Author: mingjun <minjunnzheng@gmail.com>
+Date:   Tue Dec 8 00:30:14 2020 +0800
+
+    init code

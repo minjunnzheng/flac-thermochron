@@ -1,0 +1,19 @@
+--- src/fl_move.f90	Mon Nov 19 15:29:07 2018 +0800
++++ src/fl_move.f90	Fri Apr 19 15:14:07 2019 +0800
+@@ -162,6 +162,16 @@
+ 
+     dtopo(1) = dtopo(2)
+     dtopo(nx) = dtopo(nx-1)
++
++!===NEW================================
++!    topomax=0
++!    do  i = 1, nx
++!        if (cord(1,i,2) > topomax) then
++!                dtopo(i) = topomax - cord(1,i,2)
++!        end if
++!    end do
++!======================================
++
+     cord(1,1:nx,2) = cord(1,1:nx,2) + dtopo(1:nx)
+ 
+     ! accumulated topo change since last resurface

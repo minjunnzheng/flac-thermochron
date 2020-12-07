@@ -1,0 +1,3523 @@
+commit 90994a32cfc9f792dce27c9e5e432432e4d5a13d
+Merge: 95491d0 34c82ed
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Thu May 21 16:02:03 2020 +0800
+
+    Merge branch 'latent'
+
+commit 34c82edd40cb74135e1eb6c6aeb66bedb6788585
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Thu May 21 16:00:53 2020 +0800
+
+    Changed heating region on the surface
+    
+    region:a row of elements above moho
+    
+    <src/fl_therm> change the region
+
+commit 9b5b1c830af86756c5327cacac6d1cfed654f378
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Thu May 21 15:59:59 2020 +0800
+
+    Changed heating region on the surface
+    
+    region:a row of nodes above moho
+    fixed the bugs of arrary size
+    
+    <src/fl_therm> change the region
+
+commit 1b4dbbb2da2f3ec40646324184175980e84108ef
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Thu May 21 15:57:58 2020 +0800
+
+    Larger influence region on the surface when latent heat is released
+    
+    1 element/ 4 nodes -> 3 elements/ 16 nodes, from j-index= 2
+    
+    <src/fl_therm> change the range of influence
+
+commit e6c05ba16c7bb30671553705e68b391e8e860585
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Thu May 21 15:56:22 2020 +0800
+
+    Read latent heat of mantle from input file
+    
+    <src/fl_therm> get latent heat value from input file
+    <src/params.inc><src/read_params> get latent heat from input file
+    <examples/subduction.inp.s> change input file
+
+commit 95491d06615c854f3165b75df447baa3de5b3e1f
+Merge: 67c5767 5a7d90f
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Thu May 21 15:50:42 2020 +0800
+
+    Merge branch 'saturation'
+
+commit ca2e9725ead6218db4a0e89c79dc7fe89494f5dd
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Thu May 21 15:49:20 2020 +0800
+
+    Consider the latent heat released during magma crystallization
+    
+    <src/fl_therm> Latent heat of crystallization (released only): 1.on the surface, 2.in the mantle wedge
+
+commit 5a7d90f3c3ab70e16ba12c7b5025cfbc858834d9
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Thu May 21 15:47:00 2020 +0800
+
+    Adjust the effect of melt vol. made on yield stress (saturation)
+    
+    yield stress: 0-X(param.)% linear decline to ys_weakratio(param.); X%- stay at ys_weakratio(param.)
+    <src/rh_plastic> change the weakening curve
+
+commit 67c5767f56fbf714e46856ef183b4442cd1554b2
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Thu May 21 15:38:58 2020 +0800
+
+    Fixed a bug & print out weak factor of melting (fv, fys)
+    
+    <src/arrays> new arrays: weakfactor(fv, fys)
+    <src/matprops> changed names of parameters & recorded fv
+    <src/rh_plastic> recorded fys
+    <src/outflac> save data of weak factor
+    <util/flac> functions for reading new arrays
+    
+    <src/euler2bar> fixed bugs
+    <src/fl_therm> mantle melting factor: 0.20 -> 0.25
+                   fixed a bug: loop of chamber decay
+
+commit e493ec5e139d80eccdfbf0e1c13eb800c04c833b
+Merge: 97fc12c 6bef548
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Wed Nov 20 17:48:54 2019 +0800
+
+    Merge branch 'MCT'
+
+commit 6bef548ef4e7f031d8db1c03009c1a1648d2ad7f
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Wed Nov 20 17:46:54 2019 +0800
+
+    Fixed a bug: yield stress calulation
+    
+    <src/rh_plastic.f90> fixed bugs in loop
+
+commit fcad02a53613c7574d211f918117f43dd821e8f3
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Wed Nov 20 17:44:58 2019 +0800
+
+    Adjust the effect of melt vol. made on viscosity & yield stress (MCT)
+    
+    viscosity: 0-20% melt vol.-log(weaken), non-linear decreases; >20% weaken = vis_weakratio(param.)
+    yield stress: 0-6% linear decline to ys_weakratio(param.); 6-25% linear decline from ys_weakratio(param.) to 0.
+    <src/matprops><src/rh_plastic> change the relationship
+    <src/params.inc><src/read_params> update parameter
+    <examples/> update inpoutfile
+
+commit 97fc12cfa977e5d394773830e7d3f017feec6c9c
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Wed Nov 20 17:20:12 2019 +0800
+
+    Fixed a bug: viscosity calculation
+    
+    <src/matprpos> input parameter "weak_max" must be 1> weak_max > 0
+    <util/flac2vtk> unexpected tab
+
+commit a18e1f2928a0f28725830bbf92fda81db46faef3
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Wed Nov 20 17:17:35 2019 +0800
+
+    Adjust melting vol.
+    
+    melting vol. of mantle in the real world is below 20%
+    <src/fl_therm.f90> assumed that the material passing through the solidus is only partially melted
+                       (real melt material = material passing through solidus * real melting ratio)
+
+commit 0323c6a86f18e30e6af28d1802da989b6016ac68
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Wed Nov 20 16:46:49 2019 +0800
+
+    Adjust the effect of melt vol. made on viscosity
+    
+    <src/matprpos> log(weakening multiple) and melt vol. are negatively correlated
+
+commit 086ed657890a983f368112301dd2ada3fc18fd05
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Wed Nov 20 16:45:30 2019 +0800
+
+    Without consideration of sediments partial melting
+    
+    less sediment-source magma in arc volcanic system
+    <src/newphase2marker> no partial melting caused by sediments
+
+commit 622fdf87f46691dc207c4bfa62cd4f4872ec843c
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Wed Nov 20 16:44:04 2019 +0800
+
+    Set the element for melting as a constant
+    
+    Avoid sudden generation of basalt due to mesh moving up
+    <src/newphase2marker> set the element for melting as a constant
+
+commit cd2591dc6c9d05b701c19fecbd8310a189df1c64
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Wed Nov 20 16:41:30 2019 +0800
+
+    Add a new phase (OC3)
+    
+    to separate the overriding crust, downgoing crust and crust of back-arc basin
+    <src/phase.inc> new phase: ocean3
+    <src/newphase2markers><src/init_stress> adjustment related to new phase (ocean3)
+
+commit a0f19179de3fb80318b3fd751f9ff08443ab87ed
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Wed Nov 20 16:35:46 2019 +0800
+
+    Consider partial melting caused by eclogites and sediments
+    
+    <src/newphase2marker> partial melting caused by eclogites (Yaxley and Green, 1994)
+                          partial melting caused by sediments (Nichols et al., 1994)
+                          print out the position of melting markers
+    <src/phase.inc> new phase: sediment3, dehydrated eclogite
+
+commit a5e6158063127eedc87bc689dc4f737eb818d4ad
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Wed Nov 20 16:33:31 2019 +0800
+
+    Fixed bugs of reading parameters & yield stress decrease according to melt vol.
+    
+    <src/rh_plastic> yield stress decrease according to melt vol.
+    <src/params.inc><src/read_params> read new parameter: weaken_max, weaken_launch, weaken_saturated, ys_weaken_launch, ys_weaken_ratio
+
+commit eefccf65a91c189119227b3a182e03891a971487
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Wed Nov 20 16:29:12 2019 +0800
+
+    Viscosity decrease according to melt vol.
+    
+    <src/matprop>  viscosity decrease according to melt vol.
+
+commit 5ab461f6bb9dcec7a13869f6a982f787537e3fe9
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Wed Nov 20 15:45:54 2019 +0800
+
+    Calculate the melting markers and melting vol. of rocks
+    
+    <src/newphase2marker> find melting markers based on the melting conditions of hydrated mantle
+                          print out the position of melting markers
+    <src/fl_therm> calculate the volume melting ratio in each elements
+                   melting vol. decay
+    <src/arrays> new arrays: chamber(melting vol.), meltingmarker, countmarker
+    <src/matprop> marker will not be melted below 200km
+    <src/params.inc><src/read_params> read new parameter: LVW width, melting vol. decay
+    <src/remesh> do chamber remesh
+    <src/outflac><src/saveflac><src/rsflac> save/read data melting marker and melt vol.
+    <util/flac> functions for reading new arrays
+    <util/flac2vtk> make vtk data for new arrays
+    <util/flac_interpolate> do chamber interploate
+
+commit c7ec8356f350bec2be576a78012364aea3cc7eb4
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Wed Nov 20 15:38:51 2019 +0800
+
+    Add new boundary condition & MOR on the right
+    
+    <src/fl_therm> MOR: high temperature on the right side
+    <src/matprops> MOR: low viscosity on the right side
+                   Calculation method of mantle viscosity for 410 and 660
+    <src/init_bc> Allow velocity to occur in the middle of the model
+
+commit 7ff19af7176554eb240d0387209544b39f127967
+Author: chiilee <blackdeviljuliet@gmail.com>
+Date:   Wed Nov 20 15:32:43 2019 +0800
+
+    Manual merge (https://github.com/chiilee/flac: d21e63e)
+
+commit 45affcba96a76c26c8524571b31dc0661a09142f
+Author: Eunseo Choi <echoi2@memphis.edu>
+Date:   Thu Nov 22 03:19:05 2018 -0600
+
+    euler2bar.f90: fixed unused var error occurring in the debug mode; init_marker.f90: kph should be initialized to iphse since nzone_age can be zero.
+
+commit 3521236b62fb0ea0047ee819213d17a36ae55077
+Author: Eunseo Choi <echoi2@memphis.edu>
+Date:   Sun Oct 14 21:24:40 2018 -0500
+
+    persistent syntax error with take-snapshot target fixed
+
+commit c4b118f0ecb69aafd553be1d44c2ca799fcff5d0
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 18 17:48:46 2018 +0800
+
+    describe more options for initial heterogenneities
+
+commit fba1d4a6ddda4394d9a773cbd7aa7dda50ae51af
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 17 14:54:23 2018 +0800
+
+    recording mq patch in snapshot.diff
+
+commit ba13fe4d0f1e556b1bd6fbd78412312c0028311f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jul 13 11:18:20 2018 +0800
+
+    avoid shallow but hot eclogite
+
+commit 6544dc4c024525d7cb062868b17e811d8978072c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Jul 12 10:34:29 2018 +0800
+
+    fixed a bug: visc below 410-km not bounded
+
+commit e8550240ab5799230588d316339fb904c5fe4df0
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Jul 12 10:33:33 2018 +0800
+
+    fixed a bug: phase_ratio not updated
+
+commit eedab7d164af1c27311f321cd9c8975cd779cae5
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Jul 12 10:32:18 2018 +0800
+
+    write time and step info
+
+commit 6ce75c62d4e70266e30314204ec1951a31f3f307
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Jul 12 10:22:33 2018 +0800
+
+    flush stdout
+
+commit 3ce6fd3d54b69a4a99afb140be638245528f392b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jun 26 15:13:22 2018 +0800
+
+    output stays at the same line
+
+commit bf62f12a18e2baf5fc8b78b37ba8263c2d3e14b8
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jun 26 15:13:19 2018 +0800
+
+    prevent RuntimeWarning message
+
+commit d8c911092edc00e315c0cdf1963a8bdefcd60b97
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jun 26 15:03:17 2018 +0800
+
+    python3 compatible
+
+commit 1c045f1ac8cae3291c81e0f1aefce990197df318
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jun 13 13:11:12 2018 +0800
+
+    disable too-frequent debugging output
+
+commit ea0fdceaeebbe025419f66c20df10056c0f15fb4
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Feb 20 16:52:25 2018 +0800
+
+    interpolate marker depth and temperature accurately
+
+commit 99bfed0480bed6a3fb99c9deb0cc404ce87d7d1f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Feb 20 16:33:42 2018 +0800
+
+    disabled debugging output
+
+commit eb5f58fd456aab08b980607209feddaf387e3a39
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Feb 20 16:32:12 2018 +0800
+
+    fixed a bug in the marker depth, results unaffected
+
+commit 8adb612571f81e2ad4f90769df514595375708e1
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Sep 15 10:48:55 2017 +0800
+
+    function to compute eigenvalue
+
+commit 7eff6320656bf3d707db052529476a980cb9a8a8
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Sep 15 10:47:49 2017 +0800
+
+    output strain component and compute strain axis
+
+commit a490382747defed8523469ec984e3f6b08eed6e7
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Sep 14 16:29:14 2017 +0800
+
+    faster way to compute p-axis
+
+commit 66950fda94db5f9c4a45e36a51d125c62f400386
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 4 09:34:21 2017 +0800
+
+    heat due to magma extrusion
+
+commit fe5c7366a759014ef95e61fab068e8f445cad85e
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 26 15:30:28 2017 +0800
+
+    fixed a bug in previous commit
+
+commit 63a3fc39d9e9fcfc3d694258eab3961b4de613d7
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 26 01:11:39 2017 +0800
+
+    add markers at different depths
+
+commit 6b077ae841cfa930c41a6e0c48fce60951c8eb68
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 25 16:31:19 2017 +0800
+
+    can add multiple arc markers
+
+commit ce70212ba203fd81dfb6427dd7ed19c60cc8f5f6
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 25 06:59:59 2017 +0800
+
+    break up kmant -> kserp -> khydmant -> kmant cycle
+
+commit 7c7dee47b860da7b71f62fe137962b3301e62925
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 18 16:17:36 2017 +0800
+
+    fixed bugs in bbf0e0699de2 and 6dec4b14d0af
+
+commit 8871c761bde684b61a4390a5da1b0adf1165fcbb
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jul 14 12:52:08 2017 +0800
+
+    update example input
+
+commit 2c4ee11a7a1336b6f5ff38b476f21c92664b1898
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Jul 13 10:59:08 2017 +0800
+
+    fixed a bug in previous commit
+
+commit 2d9ef321d9c46bba0ba5e5d6364ee3087b2f5382
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Jul 13 10:17:18 2017 +0800
+
+    arc magma extrusion
+
+commit b99ca62905dfa8699d21ed061e06acca9824ee24
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jul 14 11:50:52 2017 +0800
+
+    added code for cold slab thermal anomaly
+
+commit 0aa71af67b70629a8eb57e74b27442b5e348927b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jul 14 10:39:31 2017 +0800
+
+    fixed a bug in phase diagram of serp
+
+commit ddf6e7448026daf47636defffb391778340167dd
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Jul 13 11:47:25 2017 +0800
+
+    added low-P branch of serp-olivine transition
+
+commit f570bdec7e39788d7bd6216b56cdc256e98ac4f1
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jul 10 09:37:38 2017 +0800
+
+    commented out latenting heat in Eff_cp()
+
+commit b5dc659321caee857c233e8bde2dab1291791ca3
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jul 10 09:35:03 2017 +0800
+
+    commented out Eff_melt()
+
+commit d45835f9cc77b8ab437f2d0ec48eaacccc73218b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jul 10 09:32:13 2017 +0800
+
+    removed only instance of Eff_melt() call
+
+commit ce32e515f36bc8fc19567bee36e30868d00cee40
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jul 10 09:28:51 2017 +0800
+
+    turn hydrated olivine into arc extrusion
+
+commit 1568d126ed77b878330d3bab2653a2538fc42a38
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jul 10 09:28:50 2017 +0800
+
+    add hydrated mantle phase (#16), converted from dehydrated serp
+
+commit 9c11246559d7c8921517decea869e51b94a8a3cb
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jul 10 09:28:50 2017 +0800
+
+    fixed a potential bug when box z-dimension is too small
+
+commit 05d133b748334d8dd95163e9a8c3c40326ff1474
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri May 26 14:23:11 2017 +0800
+
+    incresing inhomo input to 50 lines
+
+commit 18ad75a459f01649fa4b95a6b5ac7499ff8b05a8
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri May 19 00:25:20 2017 +0800
+
+    input for init. topography
+
+commit 09e7fa6029e5538dbf9f9a06c9ba5e4c733141c5
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 24 16:43:19 2017 +0800
+
+    when phase inhom. is negative, don't set phase
+
+commit cfbb43d947cc711d2be38e3613254982b4ab72e3
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri May 19 17:16:37 2017 +0800
+
+    input for amplification factor for high elevation
+
+commit a73c359f6ed357d93add3a8f0994b4ba0706f0a6
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri May 19 16:45:25 2017 +0800
+
+    higher erosion rate for high elevation
+
+commit b0a15083a0d9104b082e99bb7678de56f8a97429
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri May 19 16:45:24 2017 +0800
+
+    fixed an undef. behavior
+    
+    F90 does not require short-circuiting in if condition.
+
+commit 2b033ac1474a38ae0939de872fe6408963c82c88
+Merge: dcefc0c 9f08458
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu May 18 18:07:18 2017 +0800
+
+    merged
+
+commit dcefc0c66170f56914e5b2b14d6e1fe40f9fd43a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu May 18 18:05:10 2017 +0800
+
+    script to plot topo and erosion rate
+
+commit 245bd55c31df583b5e72633a258a06c090c67946
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu May 18 18:04:44 2017 +0800
+
+    output erosion/sedimentation rate
+
+commit 966c8a87f98bf301833961f175b0d095744e52ad
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu May 18 16:06:37 2017 +0800
+
+    renamed variables
+
+commit 9f084587b26fdad4072f9361d785ed5c58d03495
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun May 7 00:52:03 2017 +0800
+
+    input of temperature inhom. with igeom=11
+
+commit 664d222aa91e4c4be57042b711a64fbd28ea03d1
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Apr 19 09:30:43 2017 +0800
+
+    disable continental geotherm
+
+commit af8357624fd6c01aa609b0e1300c77e82bf8cbd1
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Apr 18 16:40:57 2017 +0800
+
+    smooth transition of lith. age and thickness
+
+commit 97a9ebead4974ccd4073dd4c4acc907eabccaa12
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Apr 18 15:20:13 2017 +0800
+
+    write pressure to vtk
+
+commit 0696b0b684c03ffc684fbe15c69c46dc15668f8c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 16 09:37:23 2016 +0800
+
+    fixed a bug in resurface
+
+commit 2f6cc3cfd012966565f794fefeac7dc3e9c00b55
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 20 16:15:47 2016 +0800
+
+    fixed warning reported by ifort
+
+commit 4200872421b6cbb9970c933dbf7286f977669ffc
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 20 16:14:51 2016 +0800
+
+    fix bug in smooth layer thickness
+
+commit 17b9f62ecac858060c3b709710ff7ccf9d561ebb
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 19 15:36:48 2016 +0800
+
+    allow init. heterogeneous phase
+
+commit 9baddae05dccdf3d53382a198c75f2425592f6e4
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 19 14:43:10 2016 +0800
+
+    allow hotter phase change
+
+commit 47d2533d619943a63dbcf895e11f04de03878c81
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jul 15 09:08:00 2016 +0800
+
+    fixed an doc error
+
+commit add60d729515e3b278dec3957b2c1292655c6e87
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jul 11 22:59:06 2016 +0800
+
+    merged
+
+commit ca2a362311eeb70c1e74a999674d38b03add7236
+Merge: 2ea85aa ca3b013
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jul 11 13:27:44 2016 +0000
+
+    merged
+
+commit 2ea85aa38714dfa64c97e036540ee7f5f5b0817a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Apr 26 23:46:58 2016 +0000
+
+    fixing too many melting
+
+commit b47af9eae322b6113061335705b154f637acc7e5
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 22 15:53:21 2016 +0800
+
+    rudimentary mantle melting -> basalt, impl. by Chase Shyu
+
+commit 784111e35cb2a5feb1a6211f25b865494304dbc4
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 22 10:53:20 2016 +0800
+
+    linear t-dep viscosity below 410, 10x jump below 660
+
+commit e3be4a16ba23c3f9fd2fd754efd9d27b6445eb60
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 22 10:49:25 2016 +0800
+
+    bigger mnx, mnz
+
+commit ca79c8563bedaf29415311d1060fc43d76e81f3b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 22 10:47:38 2016 +0800
+
+    density jump across 660 with a clapeyron slope
+
+commit ca3b013c8dd0aadcc180a67a4045752f953bfcf0
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Apr 21 16:00:43 2016 +0800
+
+    print error when input parameters are missing
+
+commit b8e358e718451afc1e1e738580366eb8e68e7302
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Apr 21 15:58:35 2016 +0800
+
+    read frames and steps
+
+commit a79e5998752bc729b0ec95d4baf6f7d4213f92a2
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Dec 7 05:29:13 2015 +0000
+
+    linear T-dep visc below 410km
+
+commit 1116cc6a35e76c7924f7b3e130cbbdac0e0ca6fb
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Sep 24 17:23:38 2015 +0800
+
+    remove obsolete input files
+
+commit 98968894c6dd81d5335a17eac004c411ae748aa3
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Sep 24 17:23:15 2015 +0800
+
+    phase 1: basalt without dehydration
+
+commit 61f866fc1baddde97c3cba02fe778b9db8bc69f7
+Author: IES SURF <tan2@earth.sinica.edu.tw>
+Date:   Fri Jul 31 16:52:31 2015 +0800
+
+    changes on colorbar
+
+commit 9181645b18c236c99775ed2572a3dd6e641e3641
+Author: IES SURF <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 22 14:32:39 2015 +0800
+
+    increased vertical spacing dz
+
+commit 225e264a791609e5a0367a66bdef224de89fb0c8
+Author: IES SURF <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 22 14:30:33 2015 +0800
+
+    added plotting scripts of stress and strain-rate
+
+commit 47defba59c423ecf60eac607cfb674e1743952a3
+Author: IES SURF <tan2@earth.sinica.edu.tw>
+Date:   Fri Jul 31 17:06:25 2015 +0800
+
+    added dependency of .f90 to .inc files
+
+commit 7bed1cea14a2c6a8c045eba4073a8c1b111786db
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Sep 24 16:38:13 2015 +0800
+
+    added comment
+
+commit eb32cbe23f71eb8461d2b887379fd7d522716540
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 11 14:18:23 2015 +0800
+
+    can adjust serpentine layer thickness using input parameter
+
+commit b4d6e37a300ecb7881be01fc892d22b9ddabb3ac
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 11 11:26:14 2015 +0800
+
+    added phase change of sediment to schist
+
+commit 7fcb1f0abd7be85f9d9ca9f50d745f881ceca63b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jul 31 13:54:23 2015 +0800
+
+    5 layers of materials for nzoneage
+
+commit 75fa3f79db17a236df050a9d7a744d5b21ae7a22
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 22 13:23:52 2015 +0800
+
+    fixed bugs in the previous changeset
+
+commit 35107f50e16428177be4e15994babcfe85f60364
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jul 20 09:06:26 2015 +0800
+
+    fxied a vbc bug, might cause backward incompatibility
+    
+    When two lines of vbc have the same nbc and nofside, the 2nd line was treated
+    specially. This patch changed it.
+
+commit cc752e91ebe2792e04210abc14cad5d9dbdda3c5
+Merge: 294db1f 2ff8434
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 15 14:50:36 2015 +0800
+
+    merged
+
+commit 294db1f5120f9e46717882b5488ce9093005d916
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 15 14:45:10 2015 +0800
+
+    added GMT plotting script
+
+commit 0c735aa4022b54df67aa43157f30fa18effb03c9
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 15 14:42:03 2015 +0800
+
+    updated for changes in flac.py in 447:8909f88ee373
+
+commit 53a9630e95d5b842cc747e158a0c6013eaba99d1
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jun 16 16:56:20 2015 +0800
+
+    recording code snapshot
+
+commit 2ff84346de74ed5e757ada119110023cc68648a9
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jun 15 12:23:37 2015 +0800
+
+    input file for ocean-continent subduction
+
+commit b8d3759c6bc4303ffdc4bc9cd5552b26d9246a1c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jun 15 12:23:37 2015 +0800
+
+    input file for ocean-continent subduction
+
+commit 3e7f8685933bc716501a9d75b10eb634c79fa8ce
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jun 15 12:23:01 2015 +0800
+
+    thicker serpentine layer to avoid flat subduction
+
+commit bb5e1c7151008354e096fb82f0a20318268687bc
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jun 12 14:14:12 2015 +0800
+
+    In init. inhomogeneity, when igeom=0 or 4, and inphase is negative, original phase is used for the inhomogeneity
+
+commit 98160fcb73336afffe6c537cb77ff67d0528f8f9
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jun 12 12:54:12 2015 +0800
+
+    fixed discontinuous weakzone in inhomo. option 4
+
+commit bcacb130c5f27d4d3e1232b53fbf7c1ce08dd1ed
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Feb 25 13:11:11 2013 +0800
+
+    forgot to filter out dead marker's ID
+
+commit 218dac9e5759500755e44171387f275352b2f275
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Feb 21 13:20:01 2013 +0800
+
+    added marker ID to vtp output
+
+commit 011b3458815e6639836b2d42c1546bceeafcb358
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jan 28 14:17:46 2013 +0800
+
+    fixed a bug that only 8 marker were created initially
+
+commit 3422af7459961fac0f3a42f7487a8336ccdca089
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jan 2 12:02:33 2013 +0800
+
+    fixed marker creation for non-rectangular elements
+
+commit 3b2a5be068eb5c80fe96f005941ebd0f43fd314b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Dec 24 18:37:51 2012 +0800
+
+    fixed a bug: bdbc not set correctly
+
+commit 51637f2ce650bcc9ce76760ec7333db6ab5ee262
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Dec 24 18:37:41 2012 +0800
+
+    fixed a bug: nzonx and nzony was not set, which will crash the program during remeshing
+
+commit 38515b475a9feec296bc2177de689090996d5b5a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Dec 24 15:45:18 2012 +0800
+
+    update for ircoord
+
+commit ec2d31feedb53c5e4ce7ad105a6020e077a72684
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Dec 24 15:41:19 2012 +0800
+
+    added an option to read initial coordinates from the file
+
+commit 42acaa4c6fa329cb949d3353af537c4d99bfb96a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Dec 20 15:49:20 2012 +0800
+
+    still need backspace after open for append
+
+commit 0feb57c74df8c3dfbc77a293bcdb86c9afd3147c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Dec 20 11:38:34 2012 +0800
+
+    update and reformat
+
+commit 09b9df0980fd74a0ae6bad2266f0bba76bbecf81
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Dec 20 10:53:15 2012 +0800
+
+    renamed variable which starts with 'm' -> implicit to be integer
+
+commit c2785406f45702279f8ca3d80385918aed615b01
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Nov 5 11:17:08 2012 +0800
+
+    modified example files for plastic weakening
+
+commit c82d7ff0541498665aa6990399caa1f37c865a01
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Nov 5 11:16:43 2012 +0800
+
+    Changed the material input format about plastic weakening.
+    
+    plstrain1: the min. plastic strain needed for weakening to start
+    plstrain2: the plastic strain where the weakening is saturated
+    dilat1: dilation angle before weakening
+    dilat2: dilation angle after weakening
+
+commit 9f0d2b042f29930b6937007ac7474d7c807a688b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Nov 4 13:13:03 2012 +0800
+
+    fixed a implicit single-to-double conversion
+
+commit f11e4b82650f5795079afb517c7dc5b4608e97b7
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Nov 4 13:12:15 2012 +0800
+
+    fixed an openmp error where the private-threader variable 'irh_mark' was not init'd
+
+commit f0bc817212d65579f65924bf20bd1a80bc826ee0
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Oct 17 16:02:58 2012 +0800
+
+    fixed a bug in computing oceanic geotherm
+
+commit c45a2bdff9bb2eb95b5fec41816a3cbf1cc2a2cc
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Dec 20 15:53:47 2011 -0600
+
+    print topo and gravity to stdout
+
+commit 2283730259ac83a7029b1df243000b7ad8f666b7
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Dec 20 15:52:52 2011 -0600
+
+    erode forearc height to sea level before computing gravity; return modified topography.
+
+commit 64c5f94d3052a7cd9e23b9924468bd1d1b274d21
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Nov 14 12:30:42 2011 -0600
+
+    removed cuda files
+
+commit 7d9d3670be2781adea0dd722ea77c3f047d27454
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Nov 14 12:24:46 2011 -0600
+
+    added comments to makefile
+
+commit 8311f2e58e38295fe2cba0bc6a5f0b3042e0b179
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Nov 14 12:15:58 2011 -0600
+
+    removed cuda stuff
+
+commit c1df796c9cbe8b1c41119ea7893f16a9512a18d2
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Nov 7 15:07:28 2011 -0600
+
+    disabled debugging output
+
+commit 7c0b84eac1ba511654c112bba75381291c34d919
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Nov 7 15:07:09 2011 -0600
+
+    fixed a minor bug
+
+commit df8ed892381813be25a779ad17828ec494f65362
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Nov 5 23:25:45 2011 -0500
+
+    fixed a bug for the newly created sediment marker, which could fall outside of the element
+
+commit 0306cbec3a130d7f1af02b34e609e7de273cffee
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Nov 4 15:03:32 2011 -0500
+
+    open _contents.0 with append mode
+
+commit 1c4c357e240459414830fbe7147df008355e0acd
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Nov 1 11:22:50 2011 -0500
+
+    minor refactoring
+
+commit 0efb91908dd6d882b16eb54a89da010f8c38ebe4
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Oct 31 17:58:48 2011 -0500
+
+    aps is not init'd for visco-elastic calculation
+
+commit e1ee433428e38b6ea24b92a8b57fffc3ea98d850
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Oct 31 17:04:50 2011 -0500
+
+    removed a openmp critical section, replaced by parallel reduction. the code becomes 4x faster.
+
+commit 8d34df128a6db7113ecca1922092bd9121499edb
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Oct 30 11:30:38 2011 -0500
+
+    incorpating David's and my recent update
+
+commit 32767f2cbce53fee3bf45c3da4c1f632969466aa
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Oct 28 15:21:15 2011 -0500
+
+    added some comments
+
+commit 6984eb463e1cb520f7cfae9814685498fe69f41b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Oct 28 14:56:59 2011 -0500
+
+    fixed a bug in resurface()
+
+commit 520431f619345b207798134e1a70d26e2f263df0
+Merge: fd8b56f bd9e786
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Oct 26 14:59:38 2011 -0500
+
+    merged
+
+commit fd8b56f9fee513a4f79a8bfa93d566058073e72b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Oct 18 15:29:23 2011 -0500
+
+    implemented basin fill
+
+commit 179fac305305f0807e95e6ebe50383ade04945e8
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Oct 18 15:09:05 2011 -0500
+
+    added -g to CFLAGS at all time
+
+commit a3f351ba309a2c9c947286b421d9e33d6db4d376
+Merge: 8f74eeb ac385c6
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Oct 18 14:57:04 2011 -0500
+
+    merged
+
+commit ac385c61876f058d943fefff8e25b3441dd44bde
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Oct 18 12:49:52 2011 -0500
+
+    compute gravity with sediment-filled fore-arc basins
+
+commit bd9e786f07a2eff124a547a1982eea9f27d09f83
+Author: echoi <echoi2@memphis.edu>
+Date:   Wed Sep 28 11:37:09 2011 -0700
+
+    Made some type conversions explicit. When these were implicit, old versions (<=4.2?) of gfortran
+    in the "debug" mode raised error.
+
+commit 8f74eeb5be37bf3ce8019da5ce142fe1fa2a7afb
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 26 15:03:53 2011 -0500
+
+    forgot to update marker (x,y) location before output
+
+commit 7997e1c5fa85965b87fc7f7e44e0573849b16f5d
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 25 17:55:30 2011 -0500
+
+    fixed a bug in direction of p-axis
+
+commit 72e30fb13ed83fa0bbe5faef25b9d1950c9adb9a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 24 13:59:56 2011 -0500
+
+    when markers are created due to not enough number of markers, the new markers have age=0 as the initial markers
+
+commit e33518f3e68c103dca914f011e16163f374a8c74
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 24 13:50:32 2011 -0500
+
+    fixed a bug in 551:a25c3b6c86d7 where phases.ic was not included
+
+commit 344f1f7413546414964910901abe48b8f4f1b9bf
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 23 16:31:52 2011 -0500
+
+    refactored sediment density compaction
+
+commit 29af4049d3ac20fb11a0230c334f8bf814c57e55
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 23 16:28:57 2011 -0500
+
+    fixed a problem in nzone_age phase init, since ixtb1(n) and ixtb2(n-1) cannot overlap
+
+commit cc582ac62b7f619d33aad12b456d1a3ea24e3216
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 23 16:23:47 2011 -0500
+
+    underwater erosion should have same erosion coefficient
+
+commit f7d0470585d5f7bc3ba637136f45304960f4bf07
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 23 16:20:01 2011 -0500
+
+    fixed a bug where the incoming oceanic plate had continental geotherm, instead of geotherm from the half-spacing cooling model
+
+commit 70d3bb48f53116a175c3fde226e64394213d8df4
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 22 20:16:39 2011 -0500
+
+    silence 'which hg'
+
+commit 6c95348a3b45f53335a65e40ade8dea64b979587
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 22 19:10:13 2011 -0500
+
+    fixed a bug after 541:51594afdabb9
+
+commit 0752c13a8f265f5554f010e2bbe057ca27f5ca03
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 22 15:39:17 2011 -0500
+
+    consistently using z for the 2nd coordinate
+
+commit d2bbee62d0bf0f9b9cead382211ab235c5826231
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 22 14:51:02 2011 -0500
+
+    only output markers within the domain bound
+
+commit e838112263b3946b1f8d1c8d2a85155c3f33e9dd
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 22 14:31:51 2011 -0500
+
+    renamed variables
+
+commit 4aa3df888184fe1ddeec73a0c520448176d63819
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 22 14:10:35 2011 -0500
+
+    P-axis
+
+commit f6981311d001be4c856b466029418855785953a0
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 18 18:49:57 2011 -0500
+
+    deleted flac_gravity2.py
+
+commit 6f1ca09d459ec7c54fe65aee3b55d8032e50d277
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 18 18:49:36 2011 -0500
+
+    a different (and worse) way to compute gravity. Will delete this file later.
+
+commit 9ce13f7291ab5a776413d6abcc689d905e79f675
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 18 18:48:31 2011 -0500
+
+    some minor adjustment, also returning topography at the same x spacing as the gravity
+
+commit df4bcafab9975ec8d4d86e2eeac5117c2509e141
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 18 17:57:01 2011 -0500
+
+    fixed the shape of arrays returned by make_uniform_grid()
+
+commit 108d5dd74a5ffed683c68badf5d6640e96c7c7cb
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 18 17:55:23 2011 -0500
+
+    added some comments
+
+commit ada7cdfc9eddfd2fbc7a2860b1968871a6b9d16b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 11 19:26:44 2011 -0500
+
+    fixed a bug in not interpolating dhacc during remeshing
+
+commit 9eced940bb7d165df63257c0278721817ed0181f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Jun 23 15:03:03 2011 -0500
+
+    renaming variable
+
+commit 2ad6dc41b57861be6e79acafd8ff5b8c5040ff42
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Jun 23 14:44:07 2011 -0500
+
+    fixed a bug that returning incorrect arrays
+
+commit c0c0c74cbb878328dc5921db5d03099367c8c5e9
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jun 17 14:07:20 2011 -0500
+
+    fixed a bug introduced in 535:30deda302328
+
+commit 7c181ec6a22bcc22a22ac75fe68445bcec289a96
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jun 17 13:48:56 2011 -0500
+
+    fixed a few uninit'd variables in restart
+
+commit 76208cc4a0362a7f24799bcca752375f427f506c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jun 10 17:35:18 2011 -0500
+
+    interploating fields to a higher resolution, local grid
+
+commit 0cb1a40f51e395ed2999f381aec19302718c2209
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jun 10 17:11:50 2011 -0500
+
+    compute surface gravity from density field
+
+commit 91ddba7f0d57dc204ca0898d959fd9c010846d55
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jun 10 17:11:13 2011 -0500
+
+    clarify dimension of arrays in __doc__
+
+commit c2d57180ac8ef6cf5596427c6af4418c3243b10a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jun 7 11:49:38 2011 -0500
+
+    added ksed2 constant
+
+commit e8693dc9c52f5da3f2d1fbadb6998512e77f6cc5
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jun 7 11:47:56 2011 -0500
+
+    extending special handling of sediment density to ksed2 (was ksed1 only), no compaction for top elements on land
+
+commit bcfda4347e8f46b77cbbd578103f857aa48ad48c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu May 26 13:58:33 2011 -0500
+
+    computed boundary force every 1000 loops
+
+commit 21807ba2d9a5ea98e78bf03a2937b01bedd5e798
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu May 26 13:34:04 2011 -0500
+
+    deleted unused variable
+
+commit 1b2bb5611e99597f4cd4a354c6ee36c892153425
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri May 6 14:33:04 2011 -0500
+
+    added several output fields
+
+commit 84a50aa5661b6311ac72976cc07dcb9b0ba6ab9f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Apr 27 15:42:59 2011 -0500
+
+    added several utility functions
+
+commit 8c00e31d0b486cb69cc0c803aa15aacdcfaeb090
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 22 15:18:33 2011 -0500
+
+    compute effective viscosity
+
+commit bb24ef41cdac2ea86084fcaec1e8fb519cf2d1e7
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 22 14:25:44 2011 -0500
+
+    minor refactoring
+
+commit 6fd57969e24b2d93f27cfd41683565f286da8a06
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 22 13:57:42 2011 -0500
+
+    using harmonic mean on friction and cohesion
+    
+    arithmatic mean is still used on dilation and hardening.
+    (currently, dilation is not read from input file and is always 0.)
+
+commit 12bf341b3706558815c0924138042cf14a343bce
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 22 13:36:41 2011 -0500
+
+    fixed a bug that the final record not converted
+
+commit 8ee13bc63564b5b913c422666f06bf781c6c82b6
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Apr 4 12:24:19 2011 -0500
+
+    fixed a bug in sxz scaling
+
+commit eb2550aedd9cbdcc7ccef648d7f7c05b32f36d54
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Mar 8 11:03:10 2011 -0600
+
+    fixed a bug in 506:a843a42313df
+
+commit ff74f7c21875da4424a8a0984ced55b6db7dafbd
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Feb 24 18:28:17 2011 -0600
+
+    fixed a bug that the final record not converted
+
+commit 448262f157d75edb553802d33bea70bbfeaf36c4
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Feb 14 17:29:45 2011 -0600
+
+    refactored swapaxes
+
+commit c882cc134ed64cb818b42228d8c1a8dc55307e8a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Feb 14 15:30:40 2011 -0600
+
+    binary vtk output
+
+commit ae5c7b417e3e19cf1d47c440fbad49c314cb2725
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Feb 14 13:07:26 2011 -0600
+
+    fixed several bugs in python conversion scripts
+
+commit 1afe5cc3a2d5c01558974cfd2b194ef042c0949d
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jan 31 17:31:24 2011 -0600
+
+    compute oceanic geotherm with half space cooling model
+
+commit feb748f03a115d7cfa88201026f880569211b99f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jan 31 16:08:48 2011 -0600
+
+    minor refactoring; using 'select' to replace multi-if
+
+commit cfb3a8df78e0526567150891d7a601774df2af82
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jan 28 14:23:40 2011 -0600
+
+    added a python script to convert marker output to VTK files
+
+commit 461d945fd09d8e72fd7045cbbb91e87f694682aa
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jan 28 14:22:50 2011 -0600
+
+    minor changes
+
+commit fffc48ab3fb7e486826affe13dd0d899da48ad18
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jan 28 13:50:53 2011 -0600
+
+    Added how to use the python script to convert to vtk files
+
+commit 30c65177afd9975e9e81f66a387e420dbe042f84
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jan 28 13:42:17 2011 -0600
+
+    added a python script to convert flac output to vtk files
+
+commit 6dfe683564a835d8d063d17f9399d20e9f34730e
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jan 28 13:29:51 2011 -0600
+
+    revamped flac.py
+
+commit 4970a852aea65115d9e346cc973f46dc97271943
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jan 28 09:11:31 2011 -0600
+
+    removed 'out' prefix in the output filenames
+
+commit 9f573aa2e92b95d2f5a0b5e736358e4fc7b3d009
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jan 25 23:14:35 2011 -0600
+
+    fixing some errors in documentation
+
+commit 866897d91ba2cf08879a58114375f1b7f4426fcc
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jan 25 23:14:03 2011 -0600
+
+    Simplified plastic-strain-weakening input
+    
+    This is a backward-incompatible change to the input file.
+    1) friction angle and cohesion are input for each rock phase
+    2) old platic weakening input is gone
+
+commit ceedc4d85135837e34c9256f425d7bcade5b8485
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jan 18 15:56:52 2011 -0600
+
+    Enabled regular marker output.
+
+commit a4a38f3084c5ff22bb9602f2a48586eb73b9db74
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jan 14 12:45:39 2011 -0600
+
+    added creation age to markers
+
+commit bfcdeda558bb2627859a12309ccea159fba9a238
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jan 14 12:45:24 2011 -0600
+
+    resurface() was already called if nloop is multiples of 100
+
+commit 8966dfbdd0c7d9b5ad51bdacc7238d95a9e44380
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jan 12 13:45:30 2011 -0600
+
+    minor change on debugging output
+
+commit fff0ca48d232f1db48e7daf41e50bc62682026c4
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jan 11 15:07:09 2011 -0600
+
+    adding erosion variables to restart files
+
+commit 2594178f9fa7a02dd15ef5097c5675a0cc6cdd4e
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jan 11 14:00:20 2011 -0600
+
+    removed bottom diffusion and unused code
+
+commit b34f7f0f0bbd205d0e12647843443f40e188e31f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jan 11 13:11:48 2011 -0600
+
+    Implementeded new erosion/sedimentation for markers
+    
+    The erosion/sedimentation is modeled as diffusioin to surface topography. The
+    topography is diffused every time step. Every 100 steps, we re-check all surface
+    elements. If the element has significant erosion, the topmost marker will be
+    deleted. If the element has significant sedimentation, a new sediment marker will
+    be added, but no more than 'max_markers_per_elem' markers can be in the same
+    element.
+
+commit e1aff4a1b1c9970b207e4e587014bf2a98463a6c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jan 5 16:31:17 2011 -0600
+
+    finished erosion/sedimentation coding
+
+commit fd4e4207aecc97a2abe1793768840dc186b3c87b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Nov 24 14:55:11 2010 -0600
+
+    experimental erosion process, not finished
+
+commit c23adc3f6d87d55482a27dabc150e8999e2c90fb
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Oct 3 08:41:31 2010 -0500
+
+    refactored shape function calculation and usage
+
+commit 948555cf7e700d9c10dd097ac2abdce34faca174
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Oct 1 21:53:37 2010 -0500
+
+    fixed a bug in array mismatch
+
+commit 2f10ebc891c983c342ff654533eee95ebe31ac08
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Oct 1 17:23:30 2010 -0500
+
+    added comment to add_marker
+
+commit c363789547312c79ba47bc4d3112b5acfc81c4dd
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Oct 1 17:11:30 2010 -0500
+
+    calling add_marker in marker2elem
+
+commit 89d21a6dcff95917f524d10a65cebda5a3125f92
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Oct 1 16:51:49 2010 -0500
+
+    refactored adding marker
+
+commit 9fa7e4e93f57794ad8e319e977bf178fdfaab353
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Oct 1 17:10:06 2010 -0500
+
+    added arrays to track old topo and basement and surface markers
+
+commit dc6b5857a6d20bce39cdc5078eaf1dc689092b6e
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Jan 9 12:58:33 2011 -0600
+
+    fixed a bug in 429:16fc8bf37101
+
+commit ca753cd9bf218b7d0824336aa4ccec88dfaa1789
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jan 4 22:51:21 2011 -0600
+
+    a new vbc with velocity profile consistent with viscosity profile such that visc*d(Vx)/dz == const
+
+commit d85e522703607ff8e781828b44e782fcc0f6b2ea
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jan 4 22:50:07 2011 -0600
+
+    small initial strain rate to avoid inf viscosity
+
+commit f9a161cfc62daf945e520f4e2d034cc57dda2698
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jan 4 15:52:11 2011 -0600
+
+    fixed a typo
+
+commit 46a49d156de4fda9752fbd4b9cecdfd5de152938
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jan 4 13:16:37 2011 -0600
+
+    init'd strain rate in init_stress()
+
+commit c1b256450b40ad6599116bf254c6601ffe5ba22c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jan 4 13:08:04 2011 -0600
+
+    disable melt effect on viscosity and density
+
+commit af0dfe7aef973c020ae984b00ed42c9968b1bc01
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jan 4 12:43:25 2011 -0600
+
+    replaced 1/12 by a constant
+
+commit 6f8f16f777e57844ee2871452437ab1349b6f091
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jan 3 17:20:42 2011 -0600
+
+    added water loading to initial stress
+
+commit 4449b18940e78ab9b6a43c60e2271445290e672e
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Dec 31 19:14:47 2010 -0600
+
+    fixed a serious bug: wrong sign for water loading; reported by Luc
+
+commit eac50789cc2544fb2b8a3943a1b4ed23aa5f9015
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Nov 30 14:34:02 2010 -0600
+
+    recording current repository status when building binary
+
+commit 3d77828098a71a1f528cdc9f6f1577ba88fb2ff2
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Nov 30 14:33:22 2010 -0600
+
+    minor edit
+
+commit 8ba80ed8e84ca8dd63aae68685cd0e6a2fdeedbf
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Nov 30 14:15:24 2010 -0600
+
+    using 'nint' to define angle of weak zone
+
+commit 35e6e71a47f047e93eaeab6752f9142e622ddd11
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Nov 24 12:57:37 2010 -0600
+
+    allowing inhomogeneity when reading phase file
+
+commit 4611b7047b9301f6d6768b4822db78d732012bf2
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Nov 22 16:53:21 2010 -0600
+
+    not over-riding phase array after reading in phase file
+
+commit 0756a684d545cc6f4a14f550a74abea6662456db
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Nov 22 12:55:59 2010 -0600
+
+    not using hard-coded filename for phase file
+
+commit f0fd6001dce3fd849c5d17fd2c08f98897d7f509
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Nov 22 12:55:25 2010 -0600
+
+    removed unused vars
+
+commit e0ed564030de457939e1931694a5de75dcddbf2a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Nov 19 14:03:40 2010 -0600
+
+    averaging plastic parameters by phase ratio
+
+commit 23940a890f66946f9d124024943c1dd6f9884f93
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Nov 18 13:14:53 2010 -0600
+
+    added a bunch of gfortran warning flags
+
+commit d418a42a23cbbb5ed272e0a9ee6f5591f129f14a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Nov 18 12:53:30 2010 -0600
+
+    omp and debug options are independent
+
+commit 69d5614edf51612286b611cc022f8793e462a36a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Nov 18 12:52:19 2010 -0600
+
+    tau_heal shouldn't be private
+
+commit 82d72653206a65547128dc0d44041c44bbc1e72f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Nov 18 12:43:51 2010 -0600
+
+    commented out unused var
+
+commit 08dc997b8fd574702ce64287adad96ade9491f1b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Nov 17 17:30:22 2010 -0600
+
+    fixed a typo since 429:16fc8bf37101
+
+commit 9eac830a4b358cc7e267f2db4a0e644adc4acba1
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Nov 17 17:28:14 2010 -0600
+
+    fixed a typo since 438:a579eb2189e7
+
+commit 4a5e6c7ef051a834bb7fcda8e8b30475411c60d6
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Nov 17 17:19:34 2010 -0600
+
+    due to rounding error, aps might be less than 0 without this fix
+
+commit b8a1a30de149daea1f5e4b661f229a363f26ddca
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Nov 17 16:43:15 2010 -0600
+
+    reduced plastic strain during phase change; removed some omp directives since the do-loop is short.
+
+commit c1d0dc840c9337f52441dbe162aa671f738d5c39
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Nov 17 16:41:43 2010 -0600
+
+    allocated a temporary array
+
+commit 3fe13e4dd5bc67b221c8ff66f2277f5b34a084df
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Oct 18 12:20:12 2010 -0500
+
+    input file for benchmarking maxwell rheology
+
+commit d710fc6964a2151e4178855a6691e1abf648110f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Nov 17 12:49:32 2010 -0600
+
+    disabled marking bottom elements as mantle
+
+commit bb0590775ed215d50a4c540af25d3ca4c13d099d
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Nov 16 14:30:52 2010 -0600
+
+    adding instruction on setting OMP_NUM_THREADS
+
+commit c60c72b1bceff924862dfa88f066ab96889f98b1
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Nov 16 13:57:17 2010 -0600
+
+    minor update
+
+commit ea55c0205077ca88633e9591c774d54f3c670624
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Nov 15 16:35:33 2010 -0600
+
+    using harmonic mean to average viscosity
+
+commit 2245b8594c4796405795ee39e29b4feb43010b09
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Oct 13 16:28:08 2010 -0500
+
+    reversed the logical comparison to skip
+
+commit 53c4c8d47384d3cf3672cde7fb9149bd802c218c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Oct 13 16:24:09 2010 -0500
+
+    renamed variables; basalt-eclogite transition can happen at deeper than 50km; removed incorrect shortcut
+
+commit de4d4500436db6130ac82bf9bbee1e88ed307146
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Oct 13 16:11:32 2010 -0500
+
+    rollback 454:d52470d6e05c
+
+commit 2e852a017924dc86641623c322d432364a50571c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Oct 11 12:37:40 2010 -0500
+
+    don't override t_bot
+
+commit d8e1fd6ff94c4e00f0ceeca719cb0ec47da6d6f8
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Oct 11 11:37:56 2010 -0500
+
+    revert strong, no-weakening friction parameters for arc from 427:61380eac4eff
+
+commit a0df14511105be007013d235e3bfca53e02d0440
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Oct 11 11:36:10 2010 -0500
+
+    serpentinization shouldn't be confined by depth
+
+commit 0562e665b42ee38b46866db032699729071963bc
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Oct 11 11:34:32 2010 -0500
+
+    fixed a bug introduced in 434:c99802b3a810
+
+commit 00e176817fab833969233aa7e91ef3831d6ba349
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Sep 24 17:06:09 2010 -0500
+
+    disable some sys.msg output
+
+commit ff9250d2f6e59cca20bd4bf81516c2ba5ece438f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Sep 23 14:53:01 2010 -0500
+
+    fixed a typo introduced by revision 429:16fc8bf37101
+
+commit 56974c715b58efa0c4a7d674513409aed2888358
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Sep 21 16:45:48 2010 -0500
+
+    changed the make dependecy from .mod to .o
+
+commit 522ef49a7fe4e8596b67e061bed637fa4a37c7f7
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Sep 21 16:35:03 2010 -0500
+
+    removed phase change of phase 1
+
+commit 4383c2269a43b327cacf081abe7cd2843c07f73c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Sep 21 16:34:09 2010 -0500
+
+    realistic serpentine dehydration
+
+commit c63484397548d90a6823b656cd692d6bd4f9f146
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Sep 21 16:30:54 2010 -0500
+
+    Backout revision 423:ab40a2bf2669 "added weaken arc transformation by subduction"
+
+commit e2e84a0c449cb8d29d81546f8319f60ffe745b06
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Sep 21 16:29:18 2010 -0500
+
+    fixed a bug when idt_scale==0
+
+commit 5083d97d6e91ffc5a4fe88a661294c3c8e89dc0b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Sep 15 12:21:04 2010 -0500
+
+    if shear heating is disabled, write dissipation as 0
+
+commit a9533954c3ed8c84e6c0f84d1d1c6c8e19f0bcde
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Sep 15 00:54:45 2010 -0500
+
+    using t_bot to compute temperature profiles
+
+commit fcf576cf9620405d4b325bd839013ed7aa89fdba
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Sep 13 17:35:25 2010 -0500
+
+    using mid-element depth for new phase
+
+commit 88710c198167eb543cf487708e0c665b8608aa65
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Sep 13 16:58:33 2010 -0500
+
+    reading temperature in the example
+
+commit 6b5d3b13d9869480dd6cdf9068aac46c0364e98b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Sep 13 16:56:17 2010 -0500
+
+    fixed an bug when calling read_mesh; added reading velocity and temperature
+
+commit 309438ece50943ff6cfde904ea561a015e06efe9
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Sep 13 16:39:37 2010 -0500
+
+    Reading tracer data
+
+commit cc8ebc375c1835560fedea2204804397ad4f1ad7
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Sep 13 16:54:19 2010 -0500
+
+    write phase of tracers
+
+commit b013bbe71109894ff1d732fbbd456cfd7dbf11ad
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Sep 13 11:21:17 2010 -0500
+
+    compute sidewall temperature with depth from surface
+
+commit cabb7d2b076d86494c2f1d831065e63a0ea99a75
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Sep 13 11:04:05 2010 -0500
+
+    Changed index order of xmpt array to help cache locality. Added comments on math.
+
+commit d01cfc9552cfaa635a509d35436c0bc6cbd5cc57
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Sep 13 10:26:42 2010 -0500
+
+    deleted unused var. in marker common block
+
+commit db8dcf8811e4ad63e8ade9242d51c4971cf8eeb8
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Sep 13 10:23:25 2010 -0500
+
+    deleted unused constants
+
+commit ab4bcf04f52d8d660ff2886fca2e3218010e8d70
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Sep 10 19:54:42 2010 -0500
+
+    calling newphase2marker to change markers in a rectangular region. This avoid looping the markers repeatedly
+
+commit 2478eeb18caf6402f9e26054785baeb88706c98c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Sep 10 13:14:40 2010 -0500
+
+    convert all code to use phase number
+
+commit 8f8712f80695b010f9d386a59992758259d21f94
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Sep 10 13:04:26 2010 -0500
+
+    move phase number to a include file
+
+commit 9fea4795643233d6475959757f76c036256f7fd0
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Sep 9 18:46:51 2010 -0500
+
+    how to run the code
+
+commit 12009e6faaee3ed4b5568e10b95d4965a3197701
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Sep 8 11:51:33 2010 -0500
+
+    assign phase of left/right walls using nzone_age
+
+commit fb7d5f143487bee82e4af8470a717d0a211146bc
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Sep 7 14:26:09 2010 -0500
+
+    allowing material coming from the right
+
+commit d1c76c48042e329ca85c7ffbcefd25c959d44407
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Sep 7 11:34:49 2010 -0500
+
+    Refactored iynts=20
+
+commit eb8dc19a4dae68bc52520c9703995d5b946b32b4
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Sep 7 11:30:06 2010 -0500
+
+    adjust friction parameters with Luc's advice
+
+commit 3de86262c224b28bab51b0b205849e6ceb93a29b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Sep 2 20:48:19 2010 -0500
+
+    Added documentation from David Okaya
+
+commit 55fd7c97d257ef95d82dfdbfbdfbcb427c60dc1a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Sep 2 13:58:27 2010 -0500
+
+    using implicit none for elastic(), plastic() and maxwell() subroutines
+
+commit 421ceeaddfc49c942a5e0383aacff2c8dee3122f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Sep 1 15:09:34 2010 -0500
+
+    restore temp.0 output for backward compactibility
+
+commit 854c05e38c28754330739ef40d0ab1ef47d39420
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 31 16:13:27 2010 -0500
+
+    added weaken arc transformation by subduction
+
+commit 8ff7b42570368074591eaa8cf05a0544a5a14ed2
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 31 16:00:51 2010 -0500
+
+    fixed a typo
+
+commit 24dd97d4593722a12d26ab94cbd11cafde501de1
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 31 14:52:39 2010 -0500
+
+    minor edit
+
+commit bccf69f580b9dd541435e881cb22bc5a7439b37c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 31 12:05:33 2010 -0500
+
+    Output temperature at nodes, not elements
+
+commit 1c68ee507d6164fa105d257702dfb266062831d2
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 31 11:56:47 2010 -0500
+
+    A simple readme
+
+commit cd64ac6f802b628f901fc38b1e762ff130aaa439
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 31 11:35:43 2010 -0500
+
+    No need of omp_lib.h
+
+commit 8d671259efa2fabc64bfb2d19adb7dbf1732911f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 27 13:19:41 2010 -0500
+
+    increased array size limit
+
+commit 3aa1658694abe795fa6ca1434418a1644f33844a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 26 16:20:48 2010 -0500
+
+    re-enable plastic strain check
+
+commit 95b1916e4012dd433db4140a8c02b0d348e98c82
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 26 15:51:52 2010 -0500
+
+    fixed a bug in omp directive: tmpr was not declared as private
+
+commit 3017652018c32003cc92944dfb29b5ca02e93777
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 26 13:32:56 2010 -0500
+
+    increase the output precision
+
+commit f65993113022afc0c6c2cc4ac2bb9bac567e8d30
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 26 13:12:18 2010 -0500
+
+    temp0 is used only if istress_therm is 1
+
+commit 86c8cee1fad69e5d8dc8ff9dc13f511c2c0a69eb
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 26 12:53:32 2010 -0500
+
+    refactored eff_conduct
+
+commit fb9fc357859b73a44adeed2711572f468f411350
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 26 12:27:36 2010 -0500
+
+    reorder variables in common block to align memory
+
+commit 42e8d240bb1e4ac74344692b898cdd0c7f8351e3
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 26 12:24:38 2010 -0500
+
+    Checking mark array never grows out of bound.
+
+commit ce107b1496c06b8705476bc5d35a99fefc58c8f9
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 26 12:23:38 2010 -0500
+
+    Switch loop order so that mark%triag would be ordered.
+
+commit 840378e358a40ef87b1d4c5a0429d3e04c40ea4c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 26 10:42:41 2010 -0500
+
+    minor refactoring
+
+commit 551ffa64cc982a8d9d185078b0c807a182cef12d
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 26 09:51:30 2010 -0500
+
+    changed omp scheduling for some do-loops. In these loops, each iteration can take different time, static scheduling won't work efficiently (load imbalance)
+
+commit 8925b9ce0e1c88080ce6facedb4ba3304cd9e6b9
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 26 09:35:02 2010 -0500
+
+    turning omp workshare to sections
+
+commit 083cbd9b8075ca7b21e49df257c1e1b54fe6f78c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 26 09:09:15 2010 -0500
+
+    writing file needs to be protected in a critical section
+
+commit cca9d5d7f6a2f850584c9eb4484cca70b6027fd3
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 25 21:09:52 2010 -0500
+
+    devmax and dvmax are global variables, need to be protected in critical section during modification.
+
+commit 7cd5c62136d220172a9d51cd95e3bd4b8c515b77
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 25 16:43:54 2010 -0500
+
+    Fixed a bug in init_tracer. Reset values of dead tracers. Except the order of tracers are different, this version give identical tracer output as previous tracer output.
+
+commit a7545667dfaae3e26684d7ed62a0a41df6ddf1c7
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 25 11:25:41 2010 -0500
+
+    After privious revision, elem2marker() becomes empty. Removed it.
+
+commit 526fd773c266e0f77660c6f101a7e89633a4a4ec
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 25 11:23:44 2010 -0500
+
+    The stress,strain,temperature data of markers can be computed at outtracer(), don't need to keep them around.
+
+commit 338adf7ad8d8f41ca57095f0a7855aebfa8d573c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 25 11:15:22 2010 -0500
+
+    simplied tracer-marker double loops
+
+commit 1f127c9849e6cedeb5e74d10d9c36548d3152afb
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 24 20:37:09 2010 -0500
+
+    Input file for ocean-ocean subduction.
+    
+    This model only runs for 250 kyrs and is used for performance test too. To
+    have subduction really occur, change the model time to 10 myrs.
+
+commit 4a3a34baf104bd3aa6ca1195b08ef6a6e0e7c910
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 24 20:34:04 2010 -0500
+
+    comments
+
+commit 9048b1341fc12b66b1356ab96d3c39a687f32f6f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 24 20:32:09 2010 -0500
+
+    revert back the phase change rule of eclogite. omp'd phase ratio computation
+
+commit 0e243b31289d2c0922710781e40ba409213f3cc6
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 24 20:31:16 2010 -0500
+
+    calling change_phase every 10 loops
+
+commit ef745495750f7fd5082c024a9cdbe64516399aec
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 23 11:59:02 2010 -0500
+
+    a better check to skip deep markers
+
+commit 62c861d7512de12d1245ea0b4f2cae2485c35a5e
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 23 11:41:16 2010 -0500
+
+    adjust eclogite transition temperature and depth according to text of Hacker (1996)
+
+commit e41a930dcdad2539bb0d72e869c5435a247fd0e1
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 23 10:44:13 2010 -0500
+
+    moved ReadMoreParams() from read_more.f90 to read_params.f90
+
+commit 4f9e398c9ac307daac914e16b02c5775fe430e04
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Aug 22 22:48:08 2010 -0500
+
+    rh_visc.f90 is not used in the program
+
+commit d9570c6008d8e23b7727da6a8b675f21fbd7cb79
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Aug 22 22:46:17 2010 -0500
+
+    minor edit
+
+commit 9a920f44bc75cc1daf2edfae2316cb77c0498bc2
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Aug 22 22:43:12 2010 -0500
+
+    minor edits
+
+commit 0e1ad3497baf92728a6c114592506c51679a31dd
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Aug 21 22:17:10 2010 -0500
+
+    Fixed a bug not exiting do-loop; deepen the marker testing depth; added a disabled sanity test for nphase_counter
+
+commit d41831b0a7c22747222d000c1d3831ce3fcb2d5d
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Aug 21 22:00:14 2010 -0500
+
+    simplified computation of triag -> i,j
+
+commit 1d3a86a62a263ba3c943b408d2495d8f7ca9e510
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Aug 21 21:58:45 2010 -0500
+
+    switching loop order for cache performance
+
+commit 6654a226d69395197dbbaa03cb8aab9ef63bbb94
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Aug 21 21:58:16 2010 -0500
+
+    switching loop order for cache performance. Writing element number when creating new marker
+
+commit 5b1b74bb43a08a7e15dc9bb8c0e522df1d9281f8
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Aug 21 21:56:40 2010 -0500
+
+    Fixing a bug in locating which element the marker is belonging to.
+
+commit 8f5b35680e8d83910946bced3cbd9e2de3c05b78
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Aug 21 21:51:26 2010 -0500
+
+    forgot to check in this change
+
+commit 739f017498000a8e976f2d874b221b66d97dd710
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Aug 21 20:05:33 2010 -0500
+
+    creating 9, not 10, markers per elem. Minor refactoring.
+
+commit ab90df69eea526256ac81f665d77fd2161d96e29
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Aug 21 20:04:19 2010 -0500
+
+    simplified computation of ntriag -> i,j
+
+commit e0a53e66028015ab3d831ffffdc5adaac73f3f34
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Aug 21 20:02:52 2010 -0500
+
+    switching loop order for cache performance
+
+commit 05c91187ce51469300ac40283c9d4cd00dd2b404
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Aug 21 18:39:54 2010 -0500
+
+    fixed more comments
+
+commit 1c0fd193cb40ba50fe073ffe90320b04aba2f36f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Aug 21 12:40:40 2010 -0500
+
+    added a comment
+
+commit b422586955494169085d5d9227339b8a13660eca
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Aug 21 12:39:38 2010 -0500
+
+    replaced hard-coded phase numbers with symbolic names
+
+commit ef782f7b8008d8535f2ebc4c4c0d3035e0973e26
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Aug 21 10:22:50 2010 -0500
+
+    deleted unused if-test. iphase can never be 0
+
+commit 06ba4d2d7958e0b591d5ead264aa211381f1b1d3
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Aug 21 10:21:04 2010 -0500
+
+    deleted unused if-test. iphase can never be 0
+
+commit 72efb434f5a3180cf88b25fd9908d08ba2395386
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Aug 21 12:37:08 2010 -0500
+
+    Fixed a bug in omp directive. Removed omp directive for the do-loop of phase ratio. Made ichanged and jchanged arrays larger.
+
+commit 31c46a843dcedbc17dad9c55dbf7e567535e114f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 20 18:16:44 2010 -0500
+
+    Disable alphaE erosion, restored old erosion law
+
+commit 8f82539a0ca1e295ede3830861820dbfdae68403
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 20 13:53:24 2010 -0500
+
+    fixed a typo in omp directive
+
+commit 71cddf7482730756287a52cf8cb323dab2ae5ac4
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 20 12:28:29 2010 -0500
+
+    fixed another omp bug
+
+commit fcbbff08ca1ed3528dcccbbdf561cf4ab586bb2f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 20 11:59:47 2010 -0500
+
+    Fixed an bug of racing condition. Updated the eclogite phase rule based on Hacker (1996), Eclogite Formation and the Rheology,Buoyancy, Seismicity, and H2O Content of Oceanic Crust, AGU Monograph 96, Subduction: Top to Bottom.
+
+commit 03d14c3bad9062cefb0ba469388d3d302c849780
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 20 10:52:54 2010 -0500
+
+    getting input filename from cmd line
+
+commit afd0764a528e0abf4ad7b4bc8ca8e403819c2852
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 20 10:33:33 2010 -0500
+
+    update timing
+
+commit 744ee9cb352c20753235109ed82d1f9c5cf31025
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 20 10:30:57 2010 -0500
+
+    fixed a bug in change_phase
+
+commit 6628a962543528fa7eecd7a1e4e3ecbced2bc904
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 20 10:08:37 2010 -0500
+
+    phase 13 becomes eclogite
+
+commit 33e77886e9338abca02e7e9119f1b9ca507f8a0b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 19 22:19:13 2010 -0500
+
+    fixed two bugs introducted in previous revision
+
+commit 4c91415101f16d8dbaec23b48441dcde07bdbee9
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 19 17:45:53 2010 -0500
+
+    added eclogite as phase 13. added many comments
+
+commit 3e00e0102d86a1345a26c131710f1f4efba0267c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 19 17:45:17 2010 -0500
+
+    Rehauled the phase chnage code. Fixed a bug that crust, not mantle, was serpentitized; and OC, not CC, was getting weaker. Added eclogite phase.
+
+commit 9bd431c6b7714a7b37ecb60e3829b05e5491024d
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 19 14:32:21 2010 -0500
+
+    replacing basalt by eclogite for phase 13, switch sediment 1 and 2
+
+commit 5a15835a31dd00736c479a831bdec20ef1fae2c1
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 19 11:29:04 2010 -0500
+
+    make the max time a little bit longer so that the last step is output
+
+commit cb71ef1b28b454b570ac8f7a477c9d9a236d3f76
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 18 21:10:07 2010 -0500
+
+    switching the index order of nphase_counter and phase_ratio arrays, which should be more cache friendly.
+
+commit a978c8a36847910d4acc1271507402427283d592
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 18 19:44:01 2010 -0500
+
+    added openmp directive for change_phase subroutine
+
+commit 4415d15187923bd4b09684a45ba84f08360dc749
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 18 19:43:35 2010 -0500
+
+    added untested flags for pgi compiler
+
+commit 1a13550398419bf6998490331195d76dde1ded94
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 18 17:02:33 2010 -0500
+
+    recompute phase ratio only for those changed elements
+
+commit a2fa83463c518030692eff72c0484ce6480c5992
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 18 16:10:45 2010 -0500
+
+    updated example input with timing information
+
+commit 492d8dd3a7305c626b3ee16fa1b4f36c5a69a346
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 18 13:07:56 2010 -0500
+
+    setting radiogenic heat source to new elements on the left
+
+commit 12b65590ef0be369ffa2c4dc1890c6ad311e8328
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 18 10:53:45 2010 -0500
+
+    recompute phase ratio; disable mid-crust weakening.
+
+commit 5e7965d61d2c63ff19c3b537e4bf296d80ccb221
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 17 18:59:35 2010 -0500
+
+    removed hard-coded tau_heal value
+
+commit d1d5ed18844be16fec5a53d37f28c1d036e1f4d2
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 17 18:24:24 2010 -0500
+
+    restoring basalt-eclogite transition T to 550C
+
+commit a8f63a652cd7f42b92183f4d225564afc3df1598
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 17 18:07:42 2010 -0500
+
+    compute last time step
+
+commit fa16148236c0edf8f2ead5fd2d26cdeb7b4b3493
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 17 17:29:31 2010 -0500
+
+    The maxloc output is annoying. Disable it.
+
+commit af9cde67f3b7d173f1f45c3eb7c609308e868e3b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 17 15:57:54 2010 -0500
+
+    Changed how phase change works.
+    
+    Before, it was based on element. Calling newphase2marker() will change phase of
+    all markers within this element. Now, each marker changes phase independently.
+    
+    Treat arc phase as oceanic crust during phase change.
+
+commit eb16cd8a1cbbb09c462189ce4368422aa27be5a3
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 17 15:55:35 2010 -0500
+
+    modification for compiler doesn't understand iso_c_binding
+
+commit 5e8764a61faf72da42bc397142bd71f471033d05
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 17 15:55:04 2010 -0500
+
+    slight modification
+
+commit 6e5057978f9f87462cdc3477e8c6cd187fe3516c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 17 13:42:55 2010 -0500
+
+    refactored makefile, delete -xtarget=generic64 for Sun f90
+
+commit cbec8b8ef29e21ffac4f3abe7d4458cdc22ad2cd
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 17 11:05:06 2010 -0500
+
+    fixed a problematic modification of input parameter ixtb1
+
+commit eacf7f6b96282e0978481c13a15e89e6f0683238
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Aug 15 21:36:22 2010 -0500
+
+    updated the comment
+
+commit 235576b60886591edf4077deb58f63d72ca48e05
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Aug 15 21:35:49 2010 -0500
+
+    write forc.0 as formatted
+
+commit 6dcc6982128f4f1f57a8f60fb911cedf87f1b0cf
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Aug 15 21:09:52 2010 -0500
+
+    add flac2vtk binary to ignore list
+
+commit ba1c54f840f07f787079219eae929caf42c7728b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Aug 15 21:08:41 2010 -0500
+
+    Added makefile for util/ directory
+
+commit 3db1c242b4c94d7563e5411f52a297dc1159439a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Aug 15 21:06:44 2010 -0500
+
+    Added a script for preparing restarting files
+
+commit b8682aef68c13802e06776df3973a3805c75b33d
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Aug 15 18:51:12 2010 -0500
+
+    refactored phase change in pre_plast
+
+commit 0e8063f31d337fe6acd1521020f7a1732a1671b1
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 13 15:38:27 2010 -0500
+
+    parallelized via openmp
+
+commit 13eaeab20efd3fbc7e01663316947c1e2764383a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 13 15:37:52 2010 -0500
+
+    changed the screen output precision
+
+commit cfa0ef0e3942dbb773d54f75cb52a2e2f1155de9
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 13 14:46:56 2010 -0500
+
+    Adopted for the change of _contents.0
+    
+    * read model time from file and write it to screen
+    * changed the meaning of dumpIteration, which is (step-1) now
+    * topo output has same step number as vts output
+
+commit b7aaf03a95a975a1414f47af6b68e3fe9d1341a8
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 13 10:57:40 2010 -0500
+
+    more digits for nloop in area.dat
+
+commit 4e91bde99da8bd2c7bcab0de531c4b6caf4bfd75
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 13 10:55:23 2010 -0500
+
+    treating the 2 ocean/continent/mantle phases in the same way
+
+commit 2874a0e623e97e38fa5bcdac5d108cf5b59bbc59
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 13 10:45:50 2010 -0500
+
+    output dt with min.angle to get a sense of progress
+
+commit 6731d750be225ebb18f1c77b08e5e4a2f5a62772
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 12 15:43:29 2010 -0500
+
+    restored _contents.0 to original format
+
+commit d96470c7d8b84cbffd06b9eb852b7d760951bdae
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 11 21:48:37 2010 -0500
+
+    make prestress setup last for 600 kyrs
+
+commit 7524814300e9f196d9b8eadf460d57a7bd8f875c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 11 17:48:06 2010 -0500
+
+    added a safety check on ntrxiag
+
+commit 6548fa6f0ec9c05a4d000bccb1af6b61a3fc21f3
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 11 17:47:42 2010 -0500
+
+    fixed a bug in overwriting ntr with garbage
+
+commit 93d08dbbf5156006cbfdcf97f6115d855397ec03
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 11 16:57:03 2010 -0500
+
+    re-enable iynts=20 when remeshing
+
+commit 49f494c0ede81a605a60a1e7a2218b6257d6d9cd
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 11 16:56:16 2010 -0500
+
+    enable basalt -> eclogite transformation in Eff_dens
+
+commit 771575b37123943c4b85799b9e7a734ef4abdeea
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 11 16:55:09 2010 -0500
+
+    indented code of iynts.eq.20
+
+commit 46162a79c3d9ef611fc0b02cce7ca1284dff0b95
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 11 16:54:07 2010 -0500
+
+    removed dead code of sinusoidal vbc
+
+commit 3d1880682214e265eaaa06f22f172fbe53f49962
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 11 16:37:23 2010 -0500
+
+    Fixed a indexing bug. Output better diagnostic msg
+
+commit 61bce5e627d35137b90a970be083c14893bc5693
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 11 13:44:52 2010 -0500
+
+    calling fl_therm every loop
+    
+    Diffusion time scale is much larger than mechanical time scale. It's possible
+    to save some computational time by calling fl_therm less frequent with larger
+    dt_therm. However, if shear heating is present, fl_therm should be called
+    every loop.
+
+commit 1943d17571cac8ee093bf5657cfc6f617a581f24
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 11 13:38:11 2010 -0500
+
+    disable fracturing mid crust
+
+commit 36abab1d2b79c6d4fdb7112cb24f0285b832e763
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 11 13:20:04 2010 -0500
+
+    extending the search of neighborhood
+
+commit cee391056ad10bc35d30ce49910dd516aea8e1b9
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 11 13:00:03 2010 -0500
+
+    clean up the code and added comments
+
+commit 6e44460080b32d8911ac5ad969f244e884b2c489
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 11 12:44:11 2010 -0500
+
+    indented the code
+
+commit eac8afa3be4db58ade3a5bba12a3d75556a1aa7c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 11 12:41:42 2010 -0500
+
+    renamed subroutine re_mesh to remesh to match the filename, need to rename common /remesh/ to /remeshing/ as a result
+
+commit 26bac2c40246504db06a4235760b587922fa530d
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 10 16:25:03 2010 -0500
+
+    Reading min and max of steps to be processed from argv
+
+commit 65b82c59b169ff6ce0b0cebcb11bd6f29cc61fdf
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 10 15:55:06 2010 -0500
+
+    generate new markers more uniformly
+
+commit eb7509123b70e056d4654e84614cdbfb2146bd91
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 10 15:54:42 2010 -0500
+
+    fixed a bug when converting ntriag to j
+
+commit df69776a8f44c81fd1275bcd2988686d7aff73d1
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 10 15:54:12 2010 -0500
+
+    generate initial marker more uniformly
+
+commit 115c2d765fb8d5af092e14b14dc8b2df527613b6
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 10 15:53:16 2010 -0500
+
+    a more efficient euler2bar
+
+commit dd229eea244701d312b534bbdaad37f5ca21fea5
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 10 12:36:15 2010 -0500
+
+    recount marker phase after remeshing
+
+commit 2d3cd733c1db2df726a7fb545de6252d847e9f39
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 10 12:33:23 2010 -0500
+
+    generate additional markers randomly
+
+commit 9dbedd8faf6076ab7a152f110f03c13599668869
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 10 12:32:16 2010 -0500
+
+    recount marker phase after restart
+
+commit 0d9b83a9d3950cacd8b6acbab620eef12c8707b4
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 10 12:31:51 2010 -0500
+
+    save mark%dead information for restart
+
+commit 63db5e386fd49b00c3dd805fa62ef1ba437470d3
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 9 16:56:49 2010 -0500
+
+    refactored hydro
+
+commit d75ab33193f6dd8d5fc0c6b2396bf3c8ec1f30ba
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 9 16:45:37 2010 -0500
+
+    indented the code
+
+commit 45c62516bc57746b20105a0186af4e71ae24a6c4
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 9 16:37:45 2010 -0500
+
+    rearranged statement and added comments on phase change rules
+
+commit febd9aeee448bb32382ecbb954e11932f8f042b7
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 9 11:43:00 2010 -0500
+
+    simplified strain softening
+
+commit 3e4229fcbaa856e2c30dae0d2a7434dc996e0c6e
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 9 11:38:14 2010 -0500
+
+    Getting processed steps from command line. Clean up the code.
+
+commit 7edd555aab1a88b841ef816af86e6f30603357a5
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 6 16:12:18 2010 -0500
+
+    simplified fl_therm
+    
+    area_n and rhs don't have to be arrays, local variable will work too.
+
+commit 15d25bebd6960e8ab66b65b59521897986b2903f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 6 13:39:02 2010 -0500
+
+    reverted some changes by Nathan for his model
+
+commit 3eaa0254d40cb5d7c65b76011c86c29bb4bd751e
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 6 13:05:20 2010 -0500
+
+    enable nzone_age for iynts==2 or 10
+
+commit 79c751d3dec2c14e6d423174de26547f48941643
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Aug 6 13:03:53 2010 -0500
+
+    micro optimization
+
+commit 135ef3aa15e5e0f864120bc07c3bbca987cb3e15
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Aug 5 15:33:01 2010 -0500
+
+    write nodal, not elemental, velocity to vel.0
+
+commit fb38806a95720ff714f9db9ccefb705505c29ef3
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 4 17:39:47 2010 -0500
+
+    a small optimization
+
+commit 3fc909c7b28c80191446e917fda641837a8fa5cb
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Aug 4 17:08:25 2010 -0500
+
+    refactored the code. removed viscosity increase of phase 5
+
+commit bd120393039617ea94a1ebf7bda67f237c1dd445
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 3 10:49:08 2010 -0500
+
+    setting the bottom elements as mantle during remeshing
+
+commit 47fc56bce554226e2770684a85e22c9abc8f83a8
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 3 10:27:13 2010 -0500
+
+    enable thermal stress
+
+commit cb506429baa594996bd02d5eef353dc6852c8f91
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Aug 3 10:26:15 2010 -0500
+
+    correct the comment
+
+commit 6f627413a6699de2031a62befa5e63774a2a4ee9
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 2 15:25:19 2010 -0500
+
+    removed unused variable 'jran'
+
+commit 57150931add6f81218bf74434a333fba0d1c6538
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 2 12:07:16 2010 -0500
+
+    removed a hard-coded inhom
+
+commit 99852f7b3eb54606a9993dd378174da121d002ff
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 2 11:47:56 2010 -0500
+
+    read xinitaps in initial inhomogeneity as array
+
+commit c064eadedb8b052a10e927f73a7c749aa135e236
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 2 10:28:52 2010 -0500
+
+    simplified code, re-indented the code
+
+commit 0773a17a5a8c9b33f7dc575ceb8065f61c11a52a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 2 10:27:27 2010 -0500
+
+    removed special cases
+
+commit b6bfa48e320872394deceb11d961f0b20a647ea6
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Aug 2 10:24:48 2010 -0500
+
+    simplified code
+
+commit 395b4dc813ae858e0d954bd63446a31d969d8c02
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jul 30 16:50:38 2010 -0500
+
+    fixed a bug in phase remeshing, where marker phase was not stored back to iphase array
+
+commit 44b9ee2ae3c8069ca604dc3fb9a739877ed7403f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jul 30 14:39:12 2010 -0500
+
+    changed precision of screen output
+
+commit f7ccafa15c020ce57ea3c9b3bd68bf09cddec0e2
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jul 30 13:13:09 2010 -0500
+
+    deleted unnecessary screen output
+
+commit db619b31f6ead3052ad18c98850766328ae5cc58
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jul 30 13:08:38 2010 -0500
+
+    writing restart header as _contents.save, instead of _contents.rs.
+
+commit e48c3bf9b039fd794532a58100df9d6ba8da0df2
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Jul 30 13:07:53 2010 -0500
+
+    deleted codes that modify lphase and nphasl
+
+commit 1365d62b32399d670f4bbd842a0e21c1a8a98403
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Jul 29 15:43:23 2010 -0500
+
+    remove hard-coded thin sediment layer
+
+commit 3df2255faf241bec0cb2c34ab298de15fb4ef14d
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Jul 29 15:42:07 2010 -0500
+
+    distribute initial marker uniformly
+
+commit a09394db73debce54d9d2a167ed3f10ab638e553
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Jul 29 15:40:54 2010 -0500
+
+    saving restart information before exit
+
+commit 69d15a8b25c119d158a92273efdf74d526a3d933
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Jul 29 14:01:50 2010 -0500
+
+    phase of incoming material
+
+commit 4ae616e32a40003ad5864828718c9cbd3fba0306
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Jul 29 13:49:05 2010 -0500
+
+    added comment
+
+commit 61605e0b82b0ac034e115f030de78bf5ed0a8b86
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Jul 29 13:48:09 2010 -0500
+
+    compiling with openmp support by 'make omp=1 debug=0'
+
+commit ade35d8d4d3aa476ce1459dd8c93c8e852fd5dd5
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 28 15:56:56 2010 -0500
+
+    Update flac2vtk.c for new density and phase output
+
+commit ae6bab14eeb5d0a0a4d355e552fdb9b50e0bad73
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 28 14:30:06 2010 -0500
+
+    Restarting correctly
+
+commit bad29a58fef70dfe8520d12f4d6d84c75384dc23
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 28 14:29:17 2010 -0500
+
+    explained remeshing option
+
+commit b9edb60c88329cbd243d9580ad0d579d8f08194e
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 28 14:28:39 2010 -0500
+
+    Fixed a typo
+
+commit cda038b6b46ee6851957a0a2a686de0fe9c4224a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 28 13:19:23 2010 -0500
+
+    fixed several bugs of array size mismatch
+
+commit 0766c08b0ade46697c8a3c575e9539af99f5e2a5
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 28 12:13:26 2010 -0500
+
+    fixed a bug (array size mismatch)
+
+commit a83d7dbec747171999bbb04b0a31bc88f024e0d6
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 28 11:30:56 2010 -0500
+
+    revert data output to single precision
+
+commit 6af6885a0100fba03ad2a25cb7078cd6f644eded
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Jul 28 11:30:12 2010 -0500
+
+    Renamed output files: 'melt.0' -> 'phase.0', 'phas.0' -> 'density.0'
+    
+    Phase outout is in integer, not double.
+
+commit 317a18573c37ac0ff6eeff6f85686a541d7f950b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 27 17:30:24 2010 -0500
+
+    write single record in _contents.0
+
+commit b595d64ee1dd1a04435c9b9c7283bc9db228f73f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 27 16:37:55 2010 -0500
+
+    Simplified newphase2marker subroutine.
+
+commit 440d43bc642cc6c964dda46c281f1338ed3a7ca5
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 27 16:11:20 2010 -0500
+
+    added XXX comments
+
+commit f662a2842fb03258daf28692d9311c24287f0cec
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 27 16:11:04 2010 -0500
+
+    Using nphase, not nphasl, in several places
+
+commit e6621ba2be08f3c0e5bf8c1d9f649020ddb711dc
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 27 14:57:36 2010 -0500
+
+    update nphase_counter and phase_ratio whenever the marker phase is changed.
+
+commit b9cf6af42be36604396003fce234b58d943f1689
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 27 14:27:42 2010 -0500
+
+    removed hard-coded phase rules
+
+commit 621266e381a5a4f7d85d0f37c64d671cff417615
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 27 14:08:24 2010 -0500
+
+    read nx nz from file
+
+commit efb1527ff9c000e236b58092f5917a362cc52271
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 27 14:07:54 2010 -0500
+
+    correcting the comment in the input examplex
+
+commit 9a500a243b6b2fbf8132cbf8af38828854e053f3
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 27 11:36:28 2010 -0500
+
+    don't write marker_init.asc
+
+commit 7378a35a30e2c6999cc4d02ebc1c8b278f9b3051
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Jul 27 11:31:53 2010 -0500
+
+    make mnx and mnz larger
+
+commit 4fdcb6428741779946895faf67b90d2019b8b66a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jul 26 16:18:08 2010 -0500
+
+    Simplify marker phase calculation
+
+commit 3e6eaaf5d48b1b8721130d19d37339ea78dba64c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jul 26 16:17:18 2010 -0500
+
+    fixed 2 bugs in previous revision
+
+commit 5e93e0cef600ae74e3387a03ecd7ed8d848e53e8
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Jul 26 14:41:08 2010 -0500
+
+    Using integer, instead of float, for phase
+    
+    Removed the original iphase function, renamed the phasez array to iphase, and
+    using integer for phase throughtout the code, except marker2elem (yet).
+
+commit 81dfc6796aef4bbb26b4d1d405fdde5e4b7a9444
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon May 17 15:03:03 2010 -0500
+
+    removed unused argument in elastic()
+
+commit fb20c6eba9b12209a66106583ecb4863a2b43182
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon May 17 12:48:57 2010 -0500
+
+    indent, no other change
+
+commit 3a722e280112a3c7f8540ebd9761992b01ea6737
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon May 17 12:47:14 2010 -0500
+
+    simplified init_marker()
+
+commit 454a78f1b0df8a11873c7d50901a8965ac50763d
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu May 13 16:31:57 2010 -0500
+
+    backout faec9a7717c0 and f97eec9b7327, since they don't improve the speed
+
+commit 8cbe0f095ab19ede105a14d5036d954d90ea2bb1
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu May 13 12:43:04 2010 -0500
+
+    using shared memory in cu_fl_move3
+
+commit 0143e2d9450b1dc57eaa7309f7f614e91b79ae6f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 12 17:20:38 2010 -0500
+
+    using shared memory
+
+commit 2337c8918620b83bda47f142767f7a784f5d9152
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 12 13:46:00 2010 -0500
+
+    add an option for profiling
+
+commit 77a82db28c2868d3d938798a01c58c361e15dd3c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu May 6 18:40:53 2010 -0500
+
+    Using function arguments instead of global memory for parameters.
+    
+    For unknown reason, the previous version gives "unspecified launch
+    failure" when run on the device.
+
+commit c00298c45dae6a17460956a0e1221817ddd92555
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon May 10 12:01:27 2010 -0500
+
+    added a target attribute to c pointers to avoid ifort error
+
+commit 23d6ee78b98c095f61b4005bcf1bdc1bb273e833
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri May 7 16:38:54 2010 -0500
+
+    another fix for stress0 size
+
+commit 7d0d67408491182a084322b37d4ac9e23efefafc
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu May 6 16:17:10 2010 -0500
+
+    another fix for stress0 size
+
+commit 4227170c3530360802f29c5e53481a41cd7b7297
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu May 6 02:43:41 2010 -0500
+
+    stress0 should be defined on element, not on node. Fixed its size.
+
+commit 1ce62bd9b940fad819dba5c579aedc4968e2d015
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu May 6 02:28:16 2010 -0500
+
+    whitespace changes
+
+commit 0ed20c8501f4f8f2bc17321598d2f6d0760fd0b6
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 23:04:56 2010 -0500
+
+    check cuda error
+
+commit 3a68e966bdafe4e818029159d6606918b838a551
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 23:04:40 2010 -0500
+
+    reading/writing restart file in double precision and without temporary arrays
+
+commit 36fe185376893837941ccdf026e7727847bf1fb8
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 22:26:39 2010 -0500
+
+    c_sizeof() is not supported by ifort, using sizeof() instead
+
+commit 37300189edb52ddd15075d717472ae7bfe4e06cf
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 18:29:37 2010 -0500
+
+    overlap memcpy with kernel invokation
+
+commit eed84312d59bb99fac78e4e816806a00e3e34696
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 18:28:48 2010 -0500
+
+    init'd dvol and strain arrays
+
+commit d644545016c96e072a2c28efd556489904699a91
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 18:27:21 2010 -0500
+
+    forgot to copy area() to device
+
+commit 4a391821fe064ddb21c211a89006ef03e6f97ca5
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 17:03:40 2010 -0500
+
+    strain_d had wrong size
+
+commit d5c27f7b2e37ac4b86267e0f9ff35cc0adc480bd
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 16:43:24 2010 -0500
+
+    CUDA'ized fl_move
+
+commit 51e99c11f1cb63fe0dec23d38d4c7328559a99a4
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 16:06:25 2010 -0500
+
+    dynamically allocated area, dvol and strain arrays
+
+commit ec4c472c7e2dc9bc1f95db9f9ade6bfba330fd6c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 15:54:42 2010 -0500
+
+    reorder the indice of area and dvol arrays
+
+commit f2d4a67bd451485373203d7ea44f53c34746330e
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 15:51:23 2010 -0500
+
+    reorder the indice of area array
+
+commit 2bf6ccf7ea45690ba5484dab26f597c97467f93d
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 15:48:30 2010 -0500
+
+    reorder the indice of strain array
+
+commit 367dd2828dd2b685512de969a30d4a8e59dcbf08
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 15:09:32 2010 -0500
+
+    Passing the array size as function argument, not as template argument
+
+commit 3c943a928933eb51967e66d556d5fbf5991dce36
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 14:41:47 2010 -0500
+
+    using (nx, nz), not (mnx, mnz)
+
+commit 8fd45b094e9c89710d8febe3985e441668c54cd2
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 14:18:42 2010 -0500
+
+    Compute maxval(balance) in cuda. Finished cuda'ize fl_node
+
+commit f57c869bffd402c66e37dd1765d1be66375964b3
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 13:56:47 2010 -0500
+
+    fixed a bug in extra arguments
+
+commit 4b7d82d0561226bb159b8fe2447f7d280781f365
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 13:56:27 2010 -0500
+
+    fixed a bug in index order
+
+commit 898ffb66fed72cd08aa8a2180e920312bed85f51
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 12:49:45 2010 -0500
+
+    Using double precision literal to match cuda version
+    
+    1.0e10 -> 1.0d10
+
+commit b31a03f32c08cc4b10e5032d8034a8cd2f97ac61
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 11:37:13 2010 -0500
+
+    write binary files to compare f90 and cuda result
+
+commit 6a600abd57b667e3a86e644ea4d5a7ae97924056
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 11:07:36 2010 -0500
+
+    disable debugging output
+
+commit b711e0184518652445fbef2f5ee9d57ebc36cbd9
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed May 5 11:07:20 2010 -0500
+
+    Fixed a bug that vel array was allocated twice
+
+commit d8c6ce78a3754de4d93e616840c1703d03aebe55
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon May 3 20:24:19 2010 -0500
+
+    calling cu_fl_node
+
+commit a488a8a18de9c111e12bfda247b428b40d1e6443
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon May 3 18:11:51 2010 -0500
+
+    CUDA'ize fl_node
+
+commit 654d9cf61b56a22da3fa3e199d8bca5c57507610
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon May 3 17:01:30 2010 -0500
+
+    When iynts=20, temp array is not fully initialized.
+
+commit 44e796e2f693c827f71b49d02fc63d8671dc7d23
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon May 3 16:41:24 2010 -0500
+
+    Allocate bc array
+
+commit c884e3ffeede56285f760f0f1c283d13e4e7927d
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon May 3 16:32:08 2010 -0500
+
+    Allocateing more arrays dynamically
+
+commit 14c9ff2a4d8765b3fdf94bc0aa0eec97208762d6
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon May 3 15:07:10 2010 -0500
+
+    deleted debugging output in Makefile
+
+commit af2dd7145813d68054113b9d494ad8bbdaf20344
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon May 3 14:42:32 2010 -0500
+
+    Fixed bugs of uninitialized var
+
+commit 5a4faafe58eb660bc7a029b48f608d68fe0e0441
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon May 3 12:44:49 2010 -0500
+
+    pass nx, nz to c and cuda
+
+commit 8595b38ce6a168a78e1a965a591a17119a7d9937
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon May 3 12:30:00 2010 -0500
+
+    copying fortran variables to c and cuda
+
+commit d1dac7ab27c2b21c1308ac90878ce04497df8836
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 30 21:05:04 2010 -0500
+
+    allocate vel, force, balance arrays dynamically either in f90 or in cuda
+
+commit 10f0b43ff24c8d6de7b9147587e8ea1025026299
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 30 20:58:57 2010 -0500
+
+    allocate stress0 array dynamically either in f90 or in cuda
+
+commit bbf891b6540e43e8f9c6dfabbe4f732cce902926
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 30 20:43:10 2010 -0500
+
+    switch the index order of stress0 to coalesce CUDA memory access
+
+commit 356bce027647a63e3f6123f87b9c9a742a9f02cd
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 30 18:53:14 2010 -0500
+
+    using the new allocating method
+
+commit 5d34ec4d6ca2ad9b307f9cab7a67c4051e322d54
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 30 18:39:35 2010 -0500
+
+    Fixed a harmless out-of-bound bug, but this bug makes compiler unhappy.
+
+commit 3866368463ee293d826a6bb3bb38a9824bf7b452
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 30 18:19:26 2010 -0500
+
+    fixed an out-of-bound memory access when i==nx
+
+commit b6933110b005737cf22543d6a5028dc8867842dc
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 30 17:44:08 2010 -0500
+
+    fixed a bug introduced in 205:72b3b525f5d0
+
+commit 923b3cc212facb38f46c974e625097f2c7488a08
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 30 17:06:24 2010 -0500
+
+    Adding cuda support in Makefile
+
+commit 47dceb488d85ac30933f2ebf220d216e8877176c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 30 16:45:59 2010 -0500
+
+    Module to allocate arrays either in F90 or in CUDA.
+
+commit dc10bf12f69182b7b6af44db4576def2b36d475e
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Apr 21 13:17:38 2010 -0500
+
+    Indentation and whitespace changes
+
+commit f61db307fcfdc8a2a3732a1e535ecc9151d6faaa
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Apr 14 14:03:39 2010 -0500
+
+    disable debugging output
+
+commit a83a1d8d384b60eddcc57bd98cbd9316f3ea7269
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Apr 13 03:15:57 2010 -0500
+
+    switched the argument order of vis_creep, which is not used in the code...
+
+commit 41741177e90e3cc7b1ed35b235396011e9936d31
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Apr 13 02:38:17 2010 -0500
+
+    Removed unused argument from iphase
+
+commit 60ab1d714776fac6c5f757c43103357708b4619a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Apr 13 01:07:08 2010 -0500
+
+    switched the argument order of Hydrodiff
+
+commit 40521bff6d2ca2c0d6c0c25d81dcac66e3d98521
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Apr 12 23:29:13 2010 -0500
+
+    Refactored Eff_dens.
+
+commit 6a478f402d3f0e325f4abc009cdc3812386cb7a8
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Apr 12 23:11:20 2010 -0500
+
+    Indent Eff_dens()
+
+commit a5d656115c02b387cf5279cfc507cbfd7d2afadf
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 30 15:12:21 2010 -0500
+
+    Renamed Eff_melt2 to Eff_melt, and removed the original (now unused) Eff_melf.
+    Finished the refactoring.
+
+commit 1394c3cbae3938901472561b1cada43ead2e8669
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Apr 12 23:07:25 2010 -0500
+
+    Replacing Eff_melt by Eff_melt2
+
+commit 6576348fe004d2acdc1719c66dd38ce78346869a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Apr 12 23:02:24 2010 -0500
+
+    Removed fmelt() array. Recalculating melt fraction when needed.
+
+commit d38de3d83f37471006953b6ec19ab8ab917cdd3c
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Apr 12 22:54:17 2010 -0500
+
+    Refactored function Eff_melt() to a function doesn't depend on spatial index (i,j) and one does depend on.
+
+commit 5b573e3f0e75d53408633a2b563499a8a71c77fa
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 30 15:03:45 2010 -0500
+
+    reduce array size to minimum
+
+commit 0940b104272e7ca46f8ff4b5261f285c703820f3
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Apr 30 14:37:04 2010 -0500
+
+    deleted unused idtr() array
+
+commit f9cd069bdf0ec3e121c0ed6f37877d4b248b7ace
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Apr 4 23:31:02 2010 -0500
+
+    ignore module file
+
+commit ee964d4d4bd724d6b76dcd401af4ea410a1f5613
+Author: echoi <echoi2@memphis.edu>
+Date:   Fri Apr 2 16:37:08 2010 -0400
+
+    Added post-processing tool, flac2vtk.c.
+
+commit e899a567b613fcde6caa976ae61e981b7b53bc8a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Mar 12 15:13:45 2010 -0600
+
+    Deleted hard-coded initial surface topography (i_topost) and temperature.
+
+commit e0583a20af43492e10b38cc4031dc13066ce3351
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Mar 12 15:05:33 2010 -0600
+
+    Fixed some bugs in openmp directive.
+
+commit d5415d759b47ee5946a68044476f3ae1615ee647
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Mar 19 09:52:30 2010 -0500
+
+    Added ignore rules
+
+commit 4ccd49f912d62311fa049eb4f5542d8ea89966b0
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Mar 11 16:06:59 2010 -0600
+
+    Rearrage openmp declaration
+
+commit 745ec27e8a614073d5ddd102433d03bf062b7940
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Mar 11 16:06:39 2010 -0600
+
+    Added a comment about uninit'd variable
+
+commit a9d99c941998834ae5c16d8232e60113a1e2ee2a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Mar 11 15:37:27 2010 -0600
+
+    Added code converage test.
+    
+    "make coverage=1" will enable code converage profile in gfortran.
+    Run flac as usual. Then, run "gconv *.f90". The code converage is output
+    in *.gcov.
+
+commit a692c04448d4442f193e5cf85c0d8bebd1877642
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Mar 10 11:00:23 2010 -0800
+
+    Remove unused openmp private declaration.
+
+commit 18d5a59300c57c3475987c1de840c39c322c37bb
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Mar 10 10:59:10 2010 -0800
+
+    Remove unused data block.
+
+commit 1ef1a2f0432d86ccc5eddf8a82bf783a1568ec3f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Mar 10 10:23:35 2010 -0800
+
+    Switched the argment order from (i,j) to (j,i). The index order of other 2D arrays is (j,i).
+
+commit 1cef9d40a3ae6c23cd77970c77bd63fc3de44abb
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Mar 9 23:39:35 2010 -0800
+
+    Added a few comments. Indent some openmp declaration.
+
+commit 290d3274e33c67af9effe73985ebdeeeebc0fb86
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Mar 9 22:23:40 2010 -0800
+
+    Added a few missing openmp private declarations.
+
+commit 675196ae9db9db77923e8aa548e587981e0e4ab4
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Mar 3 14:51:04 2010 -0600
+
+    Using 'append' mode to open _outmarkers.0, _tracers.0, and _contents.rs.
+
+commit a459e722d4e3584cdccab975e7b109e6d5497efc
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Mar 3 14:46:05 2010 -0600
+
+    Switched the order of arguments of stress/strain functions.
+    
+    The argments was (ix, iz) and is (iz, ix). The order of argument is now consistent with the index order of other arrays.
+
+commit d619c1deebad8296418aac479b30abc81c6104cc
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Mar 3 10:52:23 2010 -0600
+
+    Fixed a serious bug of wrong index order when calling strainII().
+
+commit f6489cbda38fb82e9d5b7e760ab45d46dc25db66
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Mar 1 15:21:09 2010 -0600
+
+    Added a python module to read flac binary output. Only mesh.0 coordinates are read right now.
+
+commit 44ec4e75884f28fb241b779e4568893aa51a0eac
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Feb 26 11:52:14 2010 -0600
+
+    write marker phase data as integer, not as float.
+
+commit 258b7778999b96265666842950227fd134a7a53f
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Feb 25 16:01:14 2010 -0600
+
+    Consistently use kindr and kindi.
+
+commit ef195752485a05cc4277e90a25ad0e9e6a92e552
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Feb 25 15:33:44 2010 -0600
+
+    removed unused kindi
+
+commit 08debb27b105b319f710159df88097c636d07d98
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Feb 24 01:23:17 2010 -0600
+
+    replace real*4 with real(kindr)
+
+commit 4b1e4556d248c6e0d49d2196cbf62c21ba81989b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Thu Feb 25 14:00:37 2010 -0600
+
+    add an action to clean up data files produced by flac.
+
+commit 3d92516a910925cebc98e34f69311784e05e1cbb
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Feb 24 15:38:49 2010 -0600
+
+    tweak compiler/linker flags
+
+commit fab9e61dcacc43daddf2b8aafd1845652afc9e1e
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Feb 24 10:15:51 2010 -0600
+
+    'stop 999' causes run-time error when compiled with gfortran. Removed it.
+
+commit 1a218ec5a698601af11a5ccbebb1f55e2f8156eb
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Feb 24 10:14:48 2010 -0600
+
+    Using "append" mode to open file. Removed Hollerith edit descriptor from the format string.
+
+commit 3efd228c319a4ef6a73a88464e6685b61adaa13d
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Feb 24 01:26:22 2010 -0600
+
+    Fixed two out-of-bound indexing bugs. Check the range of index before use.
+
+commit cdd5dc68eabc97ea27351780fd7f27cd49cab93d
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Feb 24 01:23:01 2010 -0600
+
+    Added more debugging flags for gfortran
+
+commit 477bfa77a40c6ec550c44960b6ab5c4c05039af9
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Feb 24 01:21:49 2010 -0600
+
+    Removed temporary files, which was checked-in by mistake.
+
+commit fd7fb6d45246852bc3f2b07804db9b1f9ffa946b
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Tue Feb 23 11:23:31 2010 -0600
+
+    Cosmetic changes to silent gfortran warnings
+
+commit eb947605fb236c68f8f369ba0387bb66986ac570
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Feb 22 16:48:45 2010 -0600
+
+    Updated the compiler flags for Solaris f90.
+
+commit 0703d0ed896ffe84232e479f7feae99ce5c8440a
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Feb 22 16:05:38 2010 -0600
+
+    Added more compiler flags.
+    
+    The default is to build with debugging flags. Use "make debug=0" to turn on optimization.
+
+commit a27cc6e2457499db0a0388d4b74647efef522665
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Feb 22 14:04:41 2010 -0600
+
+    Fixed another bug in format
+
+commit 8d3401c9f576878218443432400582736e4d85a6
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Feb 22 14:01:08 2010 -0600
+
+    Fixed a bug in format
+
+commit 160dba24d8052f02380c7d39f34ca75f93289532
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sat Feb 20 20:21:13 2010 -0600
+
+    Added dly_r to OMP private var. Adjusted the layout for easier reading.
+
+commit a7078da1dfe9c6a2db6dc2f11828f90e5e045013
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Sun Feb 21 23:40:56 2010 -0600
+
+    replacing 'pause' with 'write' since the former is obsolete in f90.
+
+commit 0fa5cb81131e9e81515ab676a96edc22aaf7cca5
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Feb 19 16:54:49 2010 -0600
+
+    simplified marker module
+
+commit f4c4203028ae43f2bdf6dd8722e5d9d76f752867
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Feb 19 16:53:26 2010 -0600
+
+    update Makefile so that gfortran-4.3.0 builds flac on ppc Mac.
+
+commit 38561a9aff518f5d576c9196fd0b75436133b9e9
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Feb 10 13:44:40 2010 -0600
+
+    Rearranged array declaration order to silence gfortran warning.
+
+commit 1ff36962cd529d9f76d87a74e3127a08cceb8443
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Feb 19 14:37:07 2010 -0600
+
+    updated the comment of input file
+
+commit f0b82679ec434161368991fb7a0a46501fb00d50
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Fri Feb 19 16:15:14 2010 -0600
+
+    Commented out all compiler flags. Users must eable one set of flags.
+
+commit fa1fafbf62c5fbc75a045829292728855fae9e97
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Feb 17 13:56:53 2010 -0600
+
+    Refine Makefile to compile module data first. "make clean" won't produce any message.
+
+commit 178bb247b44f747aa7e085bd90f9c573e8627a21
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Feb 10 13:43:12 2010 -0600
+
+    added 'clean' target
+
+commit bdc6343225265026a3432eb8891665491abf8c4d
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Feb 10 12:06:48 2010 -0600
+
+    Added F90 title to *.inc files. Emacs and Vim should be able to enable syntax highlightling on these files.
+
+commit 7e8df6d6b95f60fc83f292c32327792d44779b09
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Wed Feb 10 11:47:35 2010 -0600
+
+    added makefile
+
+commit eb17a733982402d5dd70f49a461e0af92fcf7858
+Author: Eh Tan <tan2@earth.sinica.edu.tw>
+Date:   Mon Feb 8 13:54:54 2010 -0600
+
+    Import flac source code and input example from Nathan Downey
