@@ -62,7 +62,7 @@ ifeq ($(F90), gfortran)
 	else
 		CFLAGS += -O0 -Wall -fbounds-check -ftrapv -fbacktrace -fdump-core \
 			-Waliasing -Walign-commons -Wampersand -Wintrinsic-shadow \
-			-Wline-truncation -Wsurprising -Wunderflow \
+			-Wline-truncation -Wsurprising -Wunderflow -Wno-unused-variable \
 			-finit-integer=-99 -finit-real=nan -frange-check -Werror
 	endif
 

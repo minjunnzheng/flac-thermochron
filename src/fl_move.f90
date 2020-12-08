@@ -135,23 +135,24 @@ end subroutine fl_move
 ! Diffuse topography
 !============================================================
 subroutine diff_topo
+
 use arrays
 include 'precision.inc'
 include 'params.inc'
 include 'arrays.inc'
 
 dimension tkappa(mnx+1)
-real:: lowerpoint
-real :: sedi
-real :: topotemp
+double precision :: lowerpoint
+double precision :: sedi
+double precision :: topotemp
 integer :: lowerindex
 integer :: basin_Lb_index
 integer ::  basin_Rb_index
-real :: distanceR
-real :: distanceL
-real :: basin_Lb_height
-real :: basin_Rb_height
-real :: total_sed
+double precision :: distanceR
+double precision :: distanceL
+double precision :: basin_Lb_height
+double precision :: basin_Rb_height
+double precision :: total_sed
 integer :: seaR
 integer :: seaL
 !EROSION PROCESSES
@@ -304,7 +305,7 @@ subroutine resurface
           if (chgtopo > 0.) then
               ! sedimentation, add a sediment marker
               !print *, 'add sediment', i, chgtopo, elz
-             call add_marker_at_top(i, 0.05d0, elz, ksed2, nmarkers)
+             call add_marker_at_top(i, 0.05d0, time, elz, ksed2, nmarkers)
           else
               ! erosion, remove the top marker
               !print *, 'erosion', i, chgtopo, elz
@@ -357,7 +358,7 @@ subroutine resurface
           dz = chgtopo2 / elz / (n_to_add+1)
           !print *, 'add arc', i, chgtopo2, elz, n_to_add, dz
           do ii = 1, n_to_add
-              call add_marker_at_top(i, dz*ii, elz, karc1, nmarkers)
+              call add_marker_at_top(i, dz*ii, time, elz, karc1, nmarkers)
           enddo
 
           extr_acc(i) = 0.d0
@@ -559,7 +560,7 @@ return
 end subroutine correct_top_marker
 
 
-subroutine add_marker_at_top(i, dz_ratio, elz, kph, nmarkers)
+subroutine add_marker_at_top(i, dz_ratio, time, elz, kph, nmarkers)
   use arrays
   include 'precision.inc'
 
