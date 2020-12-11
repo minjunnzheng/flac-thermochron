@@ -228,7 +228,7 @@ if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
                         depth=abs(cord(1,i,2))
                         distanceL=(cord(1,i,1)-cord(1,seaL-1,1))
                         distanceR=(cord(1,seaR+1,1)-cord(1,i,1))
-                        sedi=  abs(total_sed * ((2*depth/(distanceR**2))))
+                        sedi=  abs(total_sed * ((2*depth/(distanceL**2))))
                         dtopo(i) =  sedi*timeinterval
                         print *, 'i : ', sedi
                 end if
