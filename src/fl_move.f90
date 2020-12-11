@@ -155,6 +155,7 @@ double precision :: basin_Rb_height
 double precision :: total_sed
 integer :: seaR
 integer :: seaL
+double precision :: timeinterval
 !EROSION PROCESSES
 if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
 
@@ -173,10 +174,10 @@ if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
 !        dtopo(i) = dt * snder
 !    end do
 !============================================================
-
+!=====mingjunn=========
     lowerpoint = 0
     lowerindex = 0
-    total_sed = 0.0000225
+    total_sed = 1E-9
     distanceL=0
     distanceR=0
     basin_Lb_index=0
@@ -187,6 +188,8 @@ if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
     basin_Rb_height=0
     seaR=0
     seaL=0
+    timeinterval=31536000*1.0E6*0.05
+    
     do i = 2, nx-1
         if (cord(1,i,2) < lowerpoint) then
                 lowerpoint = cord(1,i,2)
@@ -198,14 +201,13 @@ if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
 
     if (lowerindex  .GT.  100 )then
         do i =2 ,lowerindex
-                !dz = cord(1,i,2)- cord(1,i-1,2)
                 if (basin_Lb_height<cord(1,i,2) ) then
                        basin_Lb_height=cord(1,i,2)
                        basin_Lb_index = i
                 end if
         end do
         do i =lowerindex , nx-1
-                !dz = cord(1,i,2)- cord(1,i-1,2)
+
                 if ( basin_Rb_height<cord(1,i,2) ) then
                         basin_Rb_height=cord(1,i,2)
                         basin_Rb_index = i
@@ -213,9 +215,9 @@ if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
         end do
 
         do i =basin_Lb_index , basin_Rb_index
-                if (i<=lowerindex .AND. cord(1,i,2)/cord(1,i-1,2)<0) then
+                if (i<=lowerindex .AND. cord(1,i,2)<0) then
                         seaL=i
-                else if (i>lowerindex .AND. cord(1,i,2)/cord(1,i-1,2)<0) then
+                else if (i>lowerindex .AND. cord(1,i,2)<0) then
                         seaR=i
                 end if
         end do
@@ -226,8 +228,9 @@ if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
                         depth=abs(cord(1,i,2))
                         distanceL=(cord(1,i,1)-cord(1,seaL-1,1))
                         distanceR=(cord(1,seaR+1,1)-cord(1,i,1))
-                        sedi = abs(total_sed*((2*depth/(distanceL**2))))+abs(total_sed * ((2*depth/(distanceR**2))))
-                        dtopo(i) =  sedi*dt
+                        sedi=  abs(total_sed * ((2*depth/(distanceR**2))))
+                        dtopo(i) =  sedi*timeinterval
+                        print *, 'i : ', sedi
                 end if
 
         end do
@@ -238,6 +241,10 @@ if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
         end do
 
     end if
+    
+!~========mingjun=====
+
+
 
     dtopo(1) = dtopo(2)
     dtopo(nx) = dtopo(nx-1)
