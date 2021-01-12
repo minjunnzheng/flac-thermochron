@@ -177,7 +177,7 @@ if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
 !=====mingjunn=========
     lowerpoint = 0
     lowerindex = 0
-    total_sed = 1E-9
+    total_sed =3E-8
     distanceL=0
     distanceR=0
     basin_Lb_index=0
@@ -187,10 +187,9 @@ if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
     basin_Lb_height=0
     basin_Rb_height=0
     seaR=0
-    seaL=0
-    timeinterval=31536000*1.0E6*0.05
-    
+    seaL=0     
     do i = 2, nx-1
+        dtopo(i)=0
         if (cord(1,i,2) < lowerpoint) then
                 lowerpoint = cord(1,i,2)
                 lowerindex = i
@@ -213,7 +212,7 @@ if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
                         basin_Rb_index = i
                 end if
         end do
-
+   
         do i =basin_Lb_index , basin_Rb_index
                 if (i<=lowerindex .AND. cord(1,i,2)<0) then
                         seaL=i
@@ -223,21 +222,28 @@ if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
         end do
 
 !       add the sediment
-        do i =seaL , seaR
-                if (cord(1,i,2)<0) then
-                        depth=abs(cord(1,i,2))
-                        distanceL=(cord(1,i,1)-cord(1,seaL-1,1))
-                        distanceR=(cord(1,seaR+1,1)-cord(1,i,1))
-                        sedi= abs(total_sed * ((2*depth/(distanceL**2)))) +abs(total_sed * ((2*depth/(distanceL**2))))
-                        if (sedi>9.0E-16) then
-                                sedi=9.0E-16  
-                        end if 
-                        dtopo(i) =  sedi*timeinterval
-                        !print *, 'Sedi : ', sedi
-                end if
-
-        end do
-
+        
+        if (seaL-seaR==0) then 
+                do i =2 ,n-1
+                        dtopo(i) = 0
+                end do
+        else 
+                do i =seaL , seaR
+                        if (cord(1,i,2)<0) then
+                                depth=abs(cord(1,i,2))
+                                distanceL=(cord(1,i,1)-cord(1,seaL-1,1))
+                                distanceR=(cord(1,seaR+1,1)-cord(1,i,1))
+                                sedi= abs(total_sed * ((2*depth/(distanceR**2)))) +abs(total_sed * ((2*depth/(distanceL**2))))
+                                if (sedi>1.0E-7) then
+                                        sedi=1.0E-7  
+                                end if 
+                                dtopo(i) =  sedi*dt
+                                print *, 'sedi', dtopo(i), '  i',i 
+                        
+                        end if
+                end do
+        end if
+        
     else
         do i =2 ,n-1
                 dtopo(i) = 0
