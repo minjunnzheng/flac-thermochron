@@ -177,7 +177,7 @@ if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
 !=====mingjunn=========
     lowerpoint = 0
     lowerindex = 0
-    total_sed =3E-8
+    total_sed =3.5E-8
     distanceL=0
     distanceR=0
     basin_Lb_index=0
@@ -212,7 +212,7 @@ if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
                         basin_Rb_index = i
                 end if
         end do
-   
+!       find the estuary (sediment supply)   
         do i =basin_Lb_index , basin_Rb_index
                 if (i<=lowerindex .AND. cord(1,i,2)<0) then
                         seaL=i
@@ -222,23 +222,25 @@ if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
         end do
 
 !       add the sediment
-        
+        !constrain sediment
         if (seaL-seaR==0) then 
                 do i =2 ,n-1
                         dtopo(i) = 0
                 end do
         else 
+
                 do i =seaL , seaR
                         if (cord(1,i,2)<0) then
                                 depth=abs(cord(1,i,2))
                                 distanceL=(cord(1,i,1)-cord(1,seaL-1,1))
                                 distanceR=(cord(1,seaR+1,1)-cord(1,i,1))
                                 sedi= abs(total_sed * ((2*depth/(distanceR**2)))) +abs(total_sed * ((2*depth/(distanceL**2))))
-                                if (sedi>1.0E-7) then
-                                        sedi=1.0E-7  
-                                end if 
+                                if (sedi>5.0E-6) then
+                                        sedi=9.0E-6  
+                                end if
+                                print *, 'sedi ',sedi, '  i',i ,'  dt ',dt
                                 dtopo(i) =  sedi*dt
-                                print *, 'sedi', dtopo(i), '  i',i 
+                                print *, 'dtopo', dtopo(i), '  i',i 
                         
                         end if
                 end do

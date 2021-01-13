@@ -3,6 +3,12 @@ Flags used to compile the code:
    PATH=/home/summer-tan2/mingjun/flac-thermochron/src
    LD_LIBRARY_PATH=/home/summer-tan2/mingjun/flac-thermochron/src
 ==== Summary of the code ====
+commit 60498a9d720fd9153778056e0d4adcf9bfd0bb58
+Author: mingjun <minjunnzheng@gmail.com>
+Date:   Tue Jan 12 21:23:20 2021 +0800
+
+    adjust findBasin code & seeting sediment's maxium
+
 commit aedc1da9a350da2548ca0da3ddac12b3778ec67c
 Author: mingjun <minjunnzheng@gmail.com>
 Date:   Mon Dec 21 02:05:00 2020 +0800
