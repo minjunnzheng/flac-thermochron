@@ -10,11 +10,11 @@ from flac2vtk import vts_dataarray
 
 
 # filtering markers to only those within the domain bounds (in km)
-filtering = False
-xmin = 300
-xmax = 600
+filtering = True
+xmin = 350
+xmax = 700
 zmin = -20
-zmax = 00
+zmax = 4
 
 def filter_marker(x, z, age,temp,tempmax,coolingrate, phase, ID, chronage,chronif,chrontemp):
     # bool * bool is element-wise logical AND

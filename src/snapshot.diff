@@ -3,6 +3,12 @@ Flags used to compile the code:
    PATH=/home/summer-tan2/mingjun/flac-thermochron/src
    LD_LIBRARY_PATH=/home/summer-tan2/mingjun/flac-thermochron/src
 ==== Summary of the code ====
+commit 429e456dc9e33ec33504c9ff6a2dd571ed2094be
+Author: mingjun <minjunnzheng@gmail.com>
+Date:   Wed Jan 13 09:08:31 2021 +0800
+
+    test sedi const=3.5E-8
+
 commit 60498a9d720fd9153778056e0d4adcf9bfd0bb58
 Author: mingjun <minjunnzheng@gmail.com>
 Date:   Tue Jan 12 21:23:20 2021 +0800

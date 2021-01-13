@@ -236,7 +236,7 @@ if(itopodiff.eq.1 .and. topo_kappa .gt. 0. ) then
                                 distanceR=(cord(1,seaR+1,1)-cord(1,i,1))
                                 sedi= abs(total_sed * ((2*depth/(distanceR**2)))) +abs(total_sed * ((2*depth/(distanceL**2))))
                                 if (sedi>5.0E-6) then
-                                        sedi=9.0E-6  
+                                        sedi=5.0E-6  
                                 end if
                                 print *, 'sedi ',sedi, '  i',i ,'  dt ',dt
                                 dtopo(i) =  sedi*dt
